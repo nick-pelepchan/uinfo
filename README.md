@@ -66,6 +66,12 @@ The value `href = 'another link" target="_blank'` is rendered as `<a href="anoth
 ```
 
 ##Page Design
+Because the pages are built automatically using the page_set() function and the $GLOBALS['site_dir'] array, the design can easily be adapted to suit anyones needs.  The [admin](https://github.com/unassailable/uinfo/tree/master/admin) folder contains the main [style.php](https://github.com/unassailable/uinfo/blob/master/admin/style.php) and css templates.
+
 ![site design](https://raw.githubusercontent.com/unassailable/uinfo/master/media/design.png)
 
-The site's design is currently based on a full screen, three-tile pattern.  However, because the pages are built automatically off the $GLOBALS['site_dir'] array, the design can easily be adapted to suit anyones needs.
+The current design is based on a full screen (100% x 100vh), three-tile repeating pattern.  These tiles auto populate based on $GLOBALS['curr'], which is the array of the page the user is currently viewing (set by the page_set() function).
+
+Each set of nine tiles are grouped into a "tileset" div class.  If the array does not contain a full number of elements, divisible by nine, the remaining tiles are populated as blank tiles.
+
+The tilesets stack from top to bottom, giving the user an easy and visually based method of scrolling.  
