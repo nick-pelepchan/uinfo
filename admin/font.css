@@ -1,0 +1,37 @@
+/* FONTS */
+	@font-face {
+		font-family: 'Homenaje';
+		font-style: normal;
+		font-weight: 400;
+		src: url('./fonts/homenaje.woff2') format('woff2'), url('./fonts/homenaje.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Karla';
+		font-style: normal;
+		font-weight: 400;
+		src: url('./fonts/karla.woff2') format('woff2'), url('./fonts/karla.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Medula One';
+		font-style: normal;
+		font-weight: 400;
+		src: url('./fonts/medula_one.woff2') format('woff2'), url('./fonts/medula_one.woff') format('woff');
+	}
+	
+		@font-face {
+		font-family: 'Special Elite';
+		font-style: normal;
+		font-weight: 400;
+		src: url('./fonts/special_elite.woff2') format('woff2'), url('./fonts/special_elite.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Stint UC';
+		font-style: normal;
+		font-weight: 400;
+		src: url('./fonts/stint_uc.woff2') format('woff2'), url('./fonts/stint_uc.woff') format('woff');
+	}
+
+/* END FONTS */

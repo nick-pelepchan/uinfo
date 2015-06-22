@@ -1,0 +1,132 @@
+/* PRIMARY LAYOUT
+	|-html
+		|-body	(@z-1)
+			|-cont (abs@z-2)
+				|-tileset (relative@z-3)
+					|1|2 2|3|4|
+					|1|5|6|3|7|
+					|8|5|9 9|7|
+				...
+				|-footer (relative@z-3)
+	*/
+
+<?php	
+// ROWS & COLUMNS
+	$lr1='.8vh';
+	$lr2='31.6vh';
+	$lr3='62.4vh';
+	$lc1='.8%';
+	$lc2='20.6%';
+	$lc3='40.4%';
+	$lc4='60.2%';
+	$lc5='80%';
+?>
+	
+	body {
+		height:100vh;
+		overflow-y:auto;
+		overflow-x:hidden;
+		width:100vw;
+		z-index:1;
+	}
+
+	#cont {
+		left:5vw;
+		margin:0 auto;
+		min-height:100vh;
+		position:absolute;
+		right:5vw;
+		top:0;
+		z-index:2;
+	}
+	
+	.tileset {
+		height:93.2vh;
+		position:relative;
+		width:100%;
+		z-index:3;
+	}
+	
+	.one {
+		height:60.8vh;
+		left:<?=$lc1?>;
+		position:absolute;
+		top:<?=$lr1?>;
+		width:19%;
+	}
+	
+	.two {
+		height:30vh;
+		left:<?=$lc2?>;
+		position:absolute;
+		top:<?=$lr1?>;
+		width:38.8%;
+	}
+	
+	.three {
+		height:60.8vh;
+		left:<?=$lc4?>;
+		position:absolute;
+		top:<?=$lr1?>;
+		width:19%;
+	}
+	
+	.four {
+		height:30vh;
+		left:<?=$lc5?>;
+		position:absolute;
+		top:<?=$lr1?>;
+		width:19%;
+	}
+	
+	.five {
+		height:60.8vh;
+		left:<?=$lc2?>;
+		position:absolute;
+		top:<?=$lr2?>;
+		width:19%;
+	}
+	
+	.six {
+		height:30vh;
+		left:<?=$lc3?>;
+		position:absolute;
+		top:<?=$lr2?>;
+		width:19%;
+	}
+	
+	.seven {
+		height:60.8vh;
+		left:<?=$lc5?>;
+		position:absolute;
+		top:<?=$lr2?>;
+		width:19%;
+	}
+	
+	.eight {
+		height:30vh;
+		left:<?=$lc1?>;
+		position:absolute;
+		top:<?=$lr3?>;
+		width:19%;
+	}
+	
+	.nine {
+		height:30vh;
+		left:<?=$lc3?>;
+		position:absolute;
+		top:<?=$lr3?>;
+		width:38.8%;
+	}
+	
+	#debug {
+		position:relative;
+	}
+	
+	#topbar {
+		position:relative;
+		height:6vh;
+		width:100%;
+	}
+
+/* END PRIMARY LAYOUT */
