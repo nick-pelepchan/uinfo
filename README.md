@@ -1,5 +1,5 @@
 #Functional Design
-##Site Directory
+##Site Directory Array
 The site's functions begin by designating a main web root directory (`__DIR__`), which is stored in $GLOBALS['webr'].  Inside this directory a 'dir.ini' file *must* be located.  The 'ini_grab()' function builds the $GLOBALS['site_dir'] array by searching for this file and parsing its contents.  If an entry has a subdir value, then the function will enter the subdir and parse the dir.ini file within it.  This is controlled by the ini file 'sub' entries and will recurse as long as these entries have values.
 
 ###dir.ini
@@ -64,3 +64,8 @@ The value `href = 'another link" target="_blank'` is rendered as `<a href="anoth
 		['child']=> ''
     }
 ```
+
+##Page Design
+![site image](https://github.com/unassailable/uinfo/tree/master/media/design.png "Site Design")
+
+The site's design is currently based on a full screen, three-tile pattern.  However, because the pages are built automatically off the $GLOBALS['site_dir'] array, the design can easily be adapted to suit anyones needs.
