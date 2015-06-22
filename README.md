@@ -70,7 +70,7 @@ Because the pages are built automatically using the page_set() function and the 
 
 ![site design](https://raw.githubusercontent.com/unassailable/uinfo/master/media/design.png)
 
-The current design is based on a full screen (100% x 100vh), three-tile repeating pattern.  These tiles auto populate based on $GLOBALS['curr'], which is the array of the page the user is currently viewing (set by the page_set() function).
+The current design is based on a [full screen (100% x 100vh)](https://github.com/unassailable/uinfo/blob/master/admin/layout.css), three-tile repeating pattern.  These tiles auto populate based on $GLOBALS['curr'], which is the array of the page the user is currently viewing (set by the page_set() function).
 
 Each set of nine tiles are grouped into a "tileset" div class.  If the array does not contain a full number of elements, divisible by nine, the remaining tiles are populated as blank tiles.
 
