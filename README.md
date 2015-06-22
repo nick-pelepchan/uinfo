@@ -1,8 +1,22 @@
-#Functional Design
-##Site Directory Array
+#README.md
+##Page Design
+Because the pages are built automatically using the page_set() function and the $GLOBALS['site_dir'] array, the design can easily be adapted to suit anyone's needs.  The [admin](https://github.com/unassailable/uinfo/tree/master/admin) folder contains the main [style.php](https://github.com/unassailable/uinfo/blob/master/admin/style.php) and css templates.
+
+![site design](https://raw.githubusercontent.com/unassailable/uinfo/master/media/design.png)
+
+The current design is based on a [full screen (100% x 100vh)](https://github.com/unassailable/uinfo/blob/master/admin/layout.css), three-tile repeating pattern.  These tiles auto populate based on $GLOBALS['curr'], which is the array of the page the user is currently viewing (set by the page_set() function).
+
+Each set of nine tiles are grouped into a "tileset" div class.  If the array does not contain a full number of elements, divisible by nine, the remaining tiles are populated as blank tiles.
+
+The tilesets stack from top to bottom, giving the user an easy and visually based method of scrolling.
+
+![tileset](https://raw.githubusercontent.com/unassailable/uinfo/master/media/tileset.png)
+
+##Functional Design
+###Site Directory Array
 The site's functions begin by designating a main web root directory (`__DIR__`), which is stored in $GLOBALS['webr'].  Inside this directory a 'dir.ini' file *must* be located.  The 'ini_grab()' function builds the $GLOBALS['site_dir'] array by searching for this file and parsing its contents.  If an entry has a subdir value, then the function will enter the subdir and parse the dir.ini file within it.  This is controlled by the ini file 'sub' entries and will recurse as long as these entries have values.
 
-###dir.ini
+####dir.ini
 ```
 [unique_id]
 name = 'display name'
@@ -25,7 +39,7 @@ Note: Values from the ini files are parsed *verbatim*.  By default the HTML tags
 
 The value `href = 'another link" target="_blank'` is rendered as `<a href="another link" target="_blank"...`.  Effectively escaping the href attribute and assigning a target attribute while maintaining full function.
 
-###$GLOBALS['site_dir']
+####$GLOBALS['site_dir']
 ```
 [unique_id]=>
 	array(8) {
@@ -64,16 +78,3 @@ The value `href = 'another link" target="_blank'` is rendered as `<a href="anoth
 		['child']=> ''
     }
 ```
-
-##Page Design
-Because the pages are built automatically using the page_set() function and the $GLOBALS['site_dir'] array, the design can easily be adapted to suit anyone's needs.  The [admin](https://github.com/unassailable/uinfo/tree/master/admin) folder contains the main [style.php](https://github.com/unassailable/uinfo/blob/master/admin/style.php) and css templates.
-
-![site design](https://raw.githubusercontent.com/unassailable/uinfo/master/media/design.png)
-
-The current design is based on a [full screen (100% x 100vh)](https://github.com/unassailable/uinfo/blob/master/admin/layout.css), three-tile repeating pattern.  These tiles auto populate based on $GLOBALS['curr'], which is the array of the page the user is currently viewing (set by the page_set() function).
-
-Each set of nine tiles are grouped into a "tileset" div class.  If the array does not contain a full number of elements, divisible by nine, the remaining tiles are populated as blank tiles.
-
-The tilesets stack from top to bottom, giving the user an easy and visually based method of scrolling.
-
-![tileset](https://raw.githubusercontent.com/unassailable/uinfo/master/media/tileset.png)
