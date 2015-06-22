@@ -1,11 +1,11 @@
 <?php
-/////////////////////////////////////////////////////////////////////////
-// Recursively parse ini files, needed to build the site directory array
+/////////////////////////////////////////////////////////////////
+// Recursively parse ini files, build GLOBALS['site_dir']
 //
 	function ini_grab($pth){
 		$arr=parse_ini_file($pth.'/dir.ini', true); // parse directory ini
 
-		// Iterate through array and grab sub menus, if set by ['sub']
+		// Iterate through array and grab sub menus
 		foreach($arr as $k => $v){
 			$arr[$k]['incpth'] = $pth.'/';
 			$arr[$k]['imgpth'] = str_replace($GLOBALS['webr'],'',$pth).'/';
@@ -13,81 +13,16 @@
 				$arr[$k]['child'] = ini_grab($pth.'/'.$arr[$k]['sub']);
 			};
 		};
-		return $arr;
+		$GLOBALS['site_dir'] = $arr;
 	};
 //
 //
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////
-// Generate navigation menus
-//
-	function nav_gen($arr,$pth){
-		echo "\n".tb('.').'<nav id="nav">';
-		tb('+');
-		foreach($arr as $k => $v){
-			echo "\n".tb('.').'<div class="nav-item">';
-			tb('+');
-				nav_header($arr[$k],$pth,$k);
-				tb('-');
-			echo "\n".tb('.').'</div>';
-		};
-		tb('-');
-		echo "\n".tb('.').'</nav>'."\n";
-	};
-
-	function nav_header($arr,$pth,$ky){
-		if($arr['href']=='' || $arr['href']=='photo'){ // If header has sub-menu or is photo
-			echo "\n".tb('.').'<a role="button" tabindex="0" title="'.$arr['title'].'">';
-			tb('+');
-				echo "\n".tb('.').'<img class="middle-hide" src="/media/'.$arr['name'].'.png"/>';
-				echo "\n".tb('.').'<span class="desktop-only">'.$arr['name'].'</span>';
-				tb('-');
-			echo "\n".tb('.').'</a>';	
-		} else { // If header has no sub-menu
-			echo "\n".tb('.').'<a href="'.buildlnk($arr['name']).'" tabindex="-1" title="'.$arr['title'].'">';
-			tb('+');
-				echo "\n".tb('.').'<img class="middle-hide" src="/media/'.$arr['name'].'.png"/>';
-				echo "\n".tb('.').'<span class="desktop-only">'.$arr['name'].'</span>';
-				tb('-');
-			echo "\n".tb('.').'</a>';
-		};
-
-		// Build sub-menu ul
-		if($arr['sub']!=''){
-			echo "\n".tb('.').'<ul class="'.$arr['sub'].'">';
-			tb('+');
-				nav_item($arr['child'],$pth,$ky);
-				tb('-');
-			echo "\n".tb('.').'</ul>';
-		};
-	};
-
-	function nav_item($arr,$pth,$ky){
-		foreach($arr as $k => $v){				
-			if($v['imgpth']=='/photo/'){
-				echo "\n".tb('.').'<li>';
-				tb('+');
-					echo "\n".tb('.').'<a href="'.buildplnk($v['href']).'" tabindex="-1" title="'.$arr[$k]['title'].'" class="nav-sub">'.$arr[$k]['name'].'</a>';
-					tb('-');
-				echo "\n".tb('.').'</li>';
-			} else {
-				echo "\n".tb('.').'<li>';
-				tb('+');
-					echo "\n".tb('.').'<a href="'.buildlnk($arr[$k]['name']).'" tabindex="-1" title="'.$arr[$k]['title'].'" class="nav-sub">'.$arr[$k]['name'].'</a>';
-					tb('-');
-				echo "\n".tb('.').'</li>';
-			};
-		};
-	};
-//
-//
-/////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // Set the current page and update $GLOBALS['curr'] - http://stackoverflow.com/questions/2171963/php-array-as-variable-name
 //
-	function page_set($l,$sdir){
+	function page_set(){
 		/*$parts = explode(",", $l);
 		
 		for ($i = 0, $j = count($parts); $i < $j; ++$i) {
@@ -98,19 +33,66 @@
 				$sdir =& $sdir[$parts[$i]];
 			};
 		};*/
-		if($l=='main'){
-			$GLOBALS['curr'] = $sdir;
+		if($GLOBALS['loc']=='main'){
+			$GLOBALS['curr'] = $GLOBALS['site_dir'];
 			include(dirname(__DIR__).'/main.php');
 		} else {
-			$GLOBALS['curr'] = rarray_search($l,$sdir);
-			include(__DIR__.'/'.$GLOBALS['curr']['href'].'.php');
+			get_curr();
+			include(dirname(__DIR__).'/'.$GLOBALS['curr']['sub'].'.php');
 		};
-	}
+	};
+	
+	function get_curr(){
+		if(isset($GLOBALS['curr'])){
+			$GLOBALS['curr'] = $GLOBALS['curr'][$GLOBALS['loc']];
+		} else {
+			$GLOBALS['curr'] = $GLOBALS['site_dir'][$GLOBALS['loc']];
+		};
+	};
 //
 //
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+// Tile Layout
+//
+	function tiles(){
+		$i=0;
+		// Tileset div
+		echo "\n".tb('.').'<div class="tileset">';
+		tb('+');
+			$j=0;
+			foreach($GLOBALS['curr'] as $k => $v){
+				++$j;
+				// Tile div
+				echo "\n".tb('.').'<div class="tile '.num2word(++$i).'" style="background-image:url(/media/tile_border.png),url('.$v['back'].');">';
+				tb('+');
+						//echo "\n".tb('.').'<div class="fade">';					
+						//tb('+');
+						echo "\n".tb('.').'<a href="'.$v['href'].'" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
+						tb('-');
+						//echo "\n".tb('.').'</div>';					
+						//tb('-');
+				echo "\n".tb('.').'</div>'."\n";
+				if($i%9==0 && count($GLOBALS['curr'])!=$j){
+					$i=0;
+					tb('-');	
+					echo "\n".tb('.').'</div>'."\n";
+					echo "\n".tb('.').'<div class="tileset">';
+					tb('+');
+				};
+			};
+			while($i<9){
+				echo "\n".tb('.').'<div class="tile '.num2word(++$i).'"></div>';
+			};
+			tb('-');	
+		echo "\n".tb('.').'</div>'."\n";
+	};
+//
+//
+/////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////
 // Linking
 //
 	function buildlnk($string) {
@@ -135,9 +117,9 @@
 	};
 //
 //
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // GESHI
 //
 	function geshi($source,$language){
@@ -158,9 +140,9 @@
 	}
 //
 //
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // RSS
 //
 	function rss_filter($sites, $post){
@@ -241,9 +223,9 @@
 	}
 //
 //
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // SQL
 //
 	function sql_conn($query){
@@ -269,9 +251,9 @@
 	}
 //
 //
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // GALLERIES
 //
 function temp(){
@@ -483,10 +465,10 @@ function hbox_code($farr,$fp,$tb){
 };
 //
 //
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // OTHER
 //
 function arrpar($needle,$haystack) {
@@ -709,10 +691,10 @@ function debug_arr($arr){
 }
 //
 //
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 
 
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // Error handling
 //
 function customError($errno, $errstr)
@@ -722,9 +704,75 @@ function customError($errno, $errstr)
   }
 //
 //
-/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 	
-/*function page_set($pg) {
+/*
+/////////////////////////////////////////////////////////////////
+// Generate navigation menus
+//
+	function nav_gen($arr,$pth){
+		echo "\n".tb('.').'<nav id="nav">';
+		tb('+');
+		foreach($arr as $k => $v){
+			echo "\n".tb('.').'<div class="nav-item">';
+			tb('+');
+				nav_header($arr[$k],$pth,$k);
+				tb('-');
+			echo "\n".tb('.').'</div>';
+		};
+		tb('-');
+		echo "\n".tb('.').'</nav>'."\n";
+	};
+
+	function nav_header($arr,$pth,$ky){
+		if($arr['href']=='' || $arr['href']=='photo'){ // If header has sub-menu or is photo
+			echo "\n".tb('.').'<a role="button" tabindex="0" title="'.$arr['title'].'">';
+			tb('+');
+				echo "\n".tb('.').'<img class="middle-hide" src="/media/'.$arr['name'].'.png"/>';
+				echo "\n".tb('.').'<span class="desktop-only">'.$arr['name'].'</span>';
+				tb('-');
+			echo "\n".tb('.').'</a>';	
+		} else { // If header has no sub-menu
+			echo "\n".tb('.').'<a href="'.buildlnk($arr['name']).'" tabindex="-1" title="'.$arr['title'].'">';
+			tb('+');
+				echo "\n".tb('.').'<img class="middle-hide" src="/media/'.$arr['name'].'.png"/>';
+				echo "\n".tb('.').'<span class="desktop-only">'.$arr['name'].'</span>';
+				tb('-');
+			echo "\n".tb('.').'</a>';
+		};
+
+		// Build sub-menu ul
+		if($arr['sub']!=''){
+			echo "\n".tb('.').'<ul class="'.$arr['sub'].'">';
+			tb('+');
+				nav_item($arr['child'],$pth,$ky);
+				tb('-');
+			echo "\n".tb('.').'</ul>';
+		};
+	};
+
+	function nav_item($arr,$pth,$ky){
+		foreach($arr as $k => $v){				
+			if($v['imgpth']=='/photo/'){
+				echo "\n".tb('.').'<li>';
+				tb('+');
+					echo "\n".tb('.').'<a href="'.buildplnk($v['href']).'" tabindex="-1" title="'.$arr[$k]['title'].'" class="nav-sub">'.$arr[$k]['name'].'</a>';
+					tb('-');
+				echo "\n".tb('.').'</li>';
+			} else {
+				echo "\n".tb('.').'<li>';
+				tb('+');
+					echo "\n".tb('.').'<a href="'.buildlnk($arr[$k]['name']).'" tabindex="-1" title="'.$arr[$k]['title'].'" class="nav-sub">'.$arr[$k]['name'].'</a>';
+					tb('-');
+				echo "\n".tb('.').'</li>';
+			};
+		};
+	};
+//
+//
+/////////////////////////////////////////////////////////////////
+
+function page_set($pg) {
   $disp='.'; // root
   foreach($pg as $v){
     $disp=$disp.'/'.$v; // append sub then pages

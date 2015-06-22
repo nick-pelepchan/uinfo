@@ -10,9 +10,9 @@
 	//require_once(__DIR__.'/admin/tadd.php'); // IP logging
 	
 // Error handling
-	set_error_handler("customError",E_ALL);
+//	set_error_handler("customError",E_ALL);
 
-// Set globals
+// Get globals
   $GLOBALS['debug'] = strtolower(isset($_GET['debug'])?urldecode($_GET['debug']):''); // debug flag
   $GLOBALS['loc'] = strtolower(isset($_GET['loc'])?urldecode($_GET['loc']):'main'); // location string
   $GLOBALS['sub'] = strtolower(isset($_GET['sub'])?urldecode($_GET['sub']):'desc'); // sub page string
@@ -20,8 +20,8 @@
 	$GLOBALS['zoom'] = isset($_GET['zoom'])?urldecode($_GET['zoom']):''; // full page div flag
 	$GLOBALS['cap'] = isset($_GET['cap'])?urldecode($_GET['cap']):''; // full page div caption string
 	$GLOBALS['webr'] = __DIR__; // webdir root
-  $GLOBALS['site_dir'] = ini_grab($GLOBALS['webr']); // site directory array
-	$GLOBALS['tb'] = '0'; // default source indent value
+	$GLOBALS['tb'] = '0'; // default indent value
+  ini_grab($GLOBALS['webr']); // site directory array
 
 // Set cookies
 
@@ -39,9 +39,7 @@
 // Main div
 		echo "\n".tb('.').'<div id="main">'."\n";
 		tb('+');
-//			include($GLOBALS['curr']['incpth'].$GLOBALS['curr']['href'].'.php');
-			page_set($GLOBALS['loc'],$GLOBALS['site_dir']);
-			//include(__DIR__.'/main.php');
+			page_set();
 			tb('-');
 		echo "\n".tb('.').'</div>'."\n";
 
