@@ -3,11 +3,11 @@ INI File
 
   dir.ini format:
 	
-[id]
-name = 'display name'
-title = 'link title'
-href = 'link'
-back = 'image tile background url'
-sub = 'y'
+		[id]
+		name = 'display name'
+		title = 'link title'
+		href = 'link'
+		back = 'image tile background url'
+		sub = 'y'
     
     ...
