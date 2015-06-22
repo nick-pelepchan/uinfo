@@ -23,6 +23,8 @@ sub = ''
 
 Note: Values from the ini files are parsed *verbatim*.  By default the HTML tags utilize double quotes (").  This allows the values to be customized on a case by case basis easily.
 
+The value `href = 'another link" target="_blank'` is rendered as `<a href="another link" target="_blank"...`.  Effectively escaping the href attribute and assigning a target attribute while maintaining full function.
+
 ###$GLOBALS['site_dir']
 ```
 [unique_id]=>
