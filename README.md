@@ -4,13 +4,66 @@ Because the pages are built automatically using the page_set() function and the 
 
 ![site design](https://raw.githubusercontent.com/unassailable/uinfo/master/media/design.png)
 
-The current design is based on a [full screen (100% x 100vh)](https://github.com/unassailable/uinfo/blob/master/admin/layout.css), three-tile repeating pattern.  These tiles auto populate based on $GLOBALS['curr'], which is the array of the page the user is currently viewing (set by the page_set() function).
+The current design is based on a [full screen (100% x 100vh)](https://github.com/unassailable/uinfo/blob/master/admin/layout.css), three-tile repeating pattern.  These tiles auto populate based on $GLOBALS['curr'], which is the array of the page the user is currently viewing (set by the [page_set() function](https://github.com/unassailable/uinfo/blob/master/admin/functions.php)).
 
 Each set of nine tiles are grouped into a "tileset" div class.  If the array does not contain a full number of elements, divisible by nine, the remaining tiles are populated as blank tiles.
 
 The tilesets stack from top to bottom, giving the user an easy and visually based method of scrolling.
 
 ![tileset](https://raw.githubusercontent.com/unassailable/uinfo/master/media/tileset.png)
+
+##Theming Support
+The site's theme is controlled through the [style.php](https://github.com/unassailable/uinfo/blob/master/admin/style.php) file.  From within this file color schemes, fonts and styles are linked to index.php.
+
+###Color pallets
+The [colors.php](https://github.com/unassailable/uinfo/blob/master/admin/colors.php) file contains the primary pallet information for the entire site.  The colors are established using rgb values put into various arrays.
+```
+$base = array(
+	array(
+		// Primary color:
+		'prim_ltr' => '235,240,242',
+		'prim_lt' => '203,222,231',
+		'prim' => '155,193,210',
+		'prim_dk' => '108,162,185',
+		'prim_dkr' => '70,134,162',
+	),
+```
+These arrays are then piped into a function which writes a series of sub arrays to $GLOBALS['pallet'].  Each sub array contains a color group (primary_light, complementary_darker, red, blue...) and all groups have the rgba values .1-1 populated.
+```
+["pallet"]=>
+	array(29) {
+		["prim_ltr"]=>
+		array(10) {
+			["prim_ltr"]=>
+			string(19) "rgba(235,240,242,1)"
+			["prim_ltr1"]=>
+			string(20) "rgba(235,240,242,.1)"
+			["prim_ltr2"]=>
+			string(20) "rgba(235,240,242,.2)"
+			["prim_ltr3"]=>
+			string(20) "rgba(235,240,242,.3)"
+			["prim_ltr4"]=>
+			string(20) "rgba(235,240,242,.4)"
+			["prim_ltr5"]=>
+			string(20) "rgba(235,240,242,.5)"
+			["prim_ltr6"]=>
+			string(20) "rgba(235,240,242,.6)"
+			["prim_ltr7"]=>
+			string(20) "rgba(235,240,242,.7)"
+			["prim_ltr8"]=>
+			string(20) "rgba(235,240,242,.8)"
+			["prim_ltr9"]=>
+			string(20) "rgba(235,240,242,.9)"
+		}
+```
+To use a color, simply use the php shorthand tag for the desired color. 
+```
+<?=$prim_ltr7?>
+```
+or using full global variables
+```
+<?=$GLOBALS['pallet']['prim_ltr']['prim_ltr7']?>
+```
 
 ##Functional Design
 ###Site Directory Array
