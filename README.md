@@ -74,4 +74,6 @@ The current design is based on a full screen (100% x 100vh), three-tile repeatin
 
 Each set of nine tiles are grouped into a "tileset" div class.  If the array does not contain a full number of elements, divisible by nine, the remaining tiles are populated as blank tiles.
 
-The tilesets stack from top to bottom, giving the user an easy and visually based method of scrolling.  
+The tilesets stack from top to bottom, giving the user an easy and visually based method of scrolling.
+
+![tileset](https://raw.githubusercontent.com/unassailable/uinfo/master/media/tileset.png)
