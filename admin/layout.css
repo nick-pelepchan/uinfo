@@ -2,12 +2,12 @@
 	|-html
 		|-body	(@z-1)
 			|-cont (abs@z-2)
+				|-topbar (relative@z-3)
 				|-tileset (relative@z-3)
 					|1|2 2|3|4|
 					|1|5|6|3|7|
 					|8|5|9 9|7|
 				...
-				|-footer (relative@z-3)
 	*/
 
 <?php	
@@ -38,6 +38,12 @@
 		right:5vw;
 		top:0;
 		z-index:2;
+	}
+	
+	#topbar {
+		position:relative;
+		height:6vh;
+		width:100%;
 	}
 	
 	.tileset {
@@ -121,12 +127,6 @@
 	
 	#debug {
 		position:relative;
-	}
-	
-	#topbar {
-		position:relative;
-		height:6vh;
-		width:100%;
 	}
 
 /* END PRIMARY LAYOUT */
