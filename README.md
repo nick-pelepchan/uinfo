@@ -2,29 +2,18 @@ Directory Structure
   root
     |-admin
     |-media
-    |-stats
-    |-PG
-        |-PG
-            |-SPG
-                |~desc.php
-                |~...
-            |~sub.ini
-            |~PG.png
-        |~desc.php
-        |~side.ini
-        |~PG.png
+    |~dir.ini
+		|~index.php
     |~header.php
-    |~side.ini
-    |~desc.php
-    |~PG.php
+    |~main.php
+		|~topbar.php
     |~footer.php
 
-Side Navigation Menu & sub-menus
-  side.ini contains list of current directory level pages.  If sub-pages exist within a directory it must have a corresponding side.ini.
-  
-  sub.ini contains a similar list of pages, but is only utilized in the last child directory of a topic.  It is used to link subtopics within a major category (and to keep the main menu tree from becoming bloated).
+INI File 
+  dir.ini contains a list of pages and tells the function to search a subdirectory if required.
 
-  side.ini format
+  dir.ini format:
+	
     [0]
     name = 'NAME' (Visible link name)
     title = 'TITLE' (Hover link title)
