@@ -1,6 +1,6 @@
 #Functional Design
 ##Site Directory
-The site's layout begins with a main web root directory (webr).  Inside this directory a 'dir.ini' file must be located.  The 'ini_grab()' function builds the $GLOBALS['site_dir'] variable by searching for this file and parsing its contents.
+The site's layout begins with a main web root directory (webr).  Inside this directory a 'dir.ini' file must be located.  The 'ini_grab()' function builds the $GLOBALS['site_dir'] array by searching for this file and parsing its contents.
 
 ###dir.ini
 ```
