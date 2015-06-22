@@ -11,6 +11,13 @@ href = 'link'
 back = 'tile background image'
 sub = 'subdir'
 
+[unique_id]
+name = 'another name'
+title = 'another title'
+href = 'another link" target="_blank'
+back = 'another background image'
+sub = ''
+
 ...
 ```
 
@@ -18,23 +25,38 @@ sub = 'subdir'
 ```
 [unique_id]=>
     array(8) {
-      ["name"]=>
-      string(11) "display name"
-      ["title"]=>
-      string(48) "link title"
-      ["href"]=>
-      string(10) "link"
-      ["back"]=>
-      string(16) "tile background image"
-      ["sub"]=>
-      string(5) "subdir"
-      ["incpth"]=>
-      string(44) "/current/full/directory/path/"
-      ["imgpth"]=>
-      string(1) "/"
-      ["child"]=>
-				array() {
-				...
-				}
+      ['name']=>
+      string() 'display name'
+      ['title']=>
+      string() 'link title'
+      ['href']=>
+      string() 'link'
+      ['back']=>
+      string() 'tile background image'
+      ['sub']=>
+      string() 'subdir'
+      ['incpth']=>
+      string() '/current/full/directory/path/'
+      ['imgpth']=>
+      string() '/'
+      ['child']=>
+				array(8) {
+					...
+				},
+			['name']=>
+      string() 'another name'
+      ['title']=>
+      string() 'another title'
+      ['href']=>
+      string() 'another link" target="_blank'
+      ['back']=>
+      string() 'another background image'
+      ['sub']=>
+      string() 'subdir'
+      ['incpth']=>
+      string() '/current/full/directory/path/'
+      ['imgpth']=>
+      string() '/'
+      ['child']=> '',
     }
 ```
