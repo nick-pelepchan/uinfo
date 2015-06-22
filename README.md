@@ -1,4 +1,6 @@
 #Unassailable.info
+The entirety of this site is designed with HTML, PHP and CSS  (That's right, no javascript).
+
 NOTE: Still working out quite a few bugs with the underlying functions.  The site is not live yet.
 
 ##Page Design
@@ -133,3 +135,9 @@ The value `href = 'another link" target="_blank'` is rendered as `<a href="anoth
 		['child']=> ''
     }
 ```
+
+##Page Set Function
+TBD
+
+##Image Gallery
+TBD
