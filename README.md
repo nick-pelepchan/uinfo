@@ -1,4 +1,5 @@
-Directory Structure
+Directory Structure:
+
   root
     |-admin
     |-media
