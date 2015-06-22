@@ -1,4 +1,4 @@
-#README.md
+#Unassailable.info
 ##Page Design
 Because the pages are built automatically using the page_set() function and the $GLOBALS['site_dir'] array, the design can easily be adapted to suit anyone's needs.  The [admin](https://github.com/unassailable/uinfo/tree/master/admin) folder contains the main [style.php](https://github.com/unassailable/uinfo/blob/master/admin/style.php) and css templates.
 
