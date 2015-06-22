@@ -66,6 +66,6 @@ The value `href = 'another link" target="_blank'` is rendered as `<a href="anoth
 ```
 
 ##Page Design
-![alt text](https://github.com/unassailable/uinfo/tree/master/media/design.png "Site Design")
+![site design](https://raw.githubusercontent.com/unassailable/uinfo/master/media/design.png)
 
 The site's design is currently based on a full screen, three-tile pattern.  However, because the pages are built automatically off the $GLOBALS['site_dir'] array, the design can easily be adapted to suit anyones needs.
