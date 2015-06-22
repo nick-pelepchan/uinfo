@@ -125,6 +125,26 @@
 		width:38.8%;
 	}
 	
+	.soon {
+		height:60vh;
+		left:12.5%;
+		position:absolute;
+		top:<?=$lr1?>;
+		width:75%;
+	}
+	
+	.soon-text {
+		height:30vh;
+		left:12.5%;
+		font-size:2rem;
+		font-family:'Special Elite';
+		line-height:2.2rem;
+		position:absolute;
+		text-align:center;
+		top:61.6vh;
+		width:75%;
+	}
+	
 	#debug {
 		position:relative;
 	}
