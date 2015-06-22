@@ -21,6 +21,8 @@ sub = ''
 ...
 ```
 
+Note: Values from the ini files are parsed *verbatim*.  By default the HTML tags utilize double quotes (").  This allows the values to be customized on a case by case basis easily.
+
 ###$GLOBALS['site_dir']
 ```
 [unique_id]=>
