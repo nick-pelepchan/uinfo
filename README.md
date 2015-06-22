@@ -44,19 +44,19 @@ sub = ''
 					...
 				},
 			['name']=>
-      string() 'another name'
-      ['title']=>
-      string() 'another title'
-      ['href']=>
-      string() 'another link" target="_blank'
-      ['back']=>
-      string() 'another background image'
-      ['sub']=>
-      string() 'subdir'
-      ['incpth']=>
-      string() '/current/full/directory/path/'
-      ['imgpth']=>
-      string() '/'
-      ['child']=> '',
+			string() 'another name'
+			['title']=>
+			string() 'another title'
+			['href']=>
+			string() 'another link" target="_blank'
+			['back']=>
+			string() 'another background image'
+			['sub']=>
+			string() 'subdir'
+			['incpth']=>
+			string() '/current/full/directory/path/'
+			['imgpth']=>
+			string() '/'
+			['child']=> ''
     }
 ```
