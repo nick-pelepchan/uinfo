@@ -1,9 +1,10 @@
+<?php
+header("Content-type: text/css");
+?>
 /* All hope abandon ye who enter here */
 
 /* !!! ORDERED BY HIERARCHY !!! */
-
 <?php
-header("Content-type: text/css");
 include(__DIR__.'/colors.php');
 include(__DIR__.'/vars.php');
 include(__DIR__.'/resets.css');
@@ -180,6 +181,16 @@ X:nth-last-child(n) (nth-last-child)
 		max-height:6vh;
 	}
 	
+/* BACK DIV */
+	#back {
+		background:<?=$black?>;
+	}
+	
+	#back img {
+		vertical-align:middle;
+		max-height:1.5rem;
+	}
+	
 /* TILES */
 	.tile {
 		background-color:<?=$prim_lt?>;
@@ -204,11 +215,11 @@ X:nth-last-child(n) (nth-last-child)
 		font-family:'Special Elite';
 		font-size:2rem;
 		font-variant:small-caps;
-		left:0;
+		left:.1em;
 		padding:.1em;
 		position:absolute;
 		text-align:left;
-		top:0;
+		top:.1em;
 		word-wrap:break-word;
 	}
 	
@@ -366,6 +377,10 @@ X:nth-last-child(n) (nth-last-child)
 	
 	.block {
 		display:block !important;
+	}
+	
+	.center {
+		margin:0 auto;
 	}
 
 	.clearfix:after {

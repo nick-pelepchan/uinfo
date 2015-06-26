@@ -1,6 +1,35 @@
 <?php
 /////////////////////////////////////////////////////////////////
-// Recursively parse ini files, build GLOBALS['site_dir']
+// build GLOBALS['site_dir']
+//
+	function global_build(){
+		$GLOBALS['webr']=dirname(__DIR__); // web root dir
+		$GLOBALS['tb'] = '0'; // default indent value
+		$GLOBALS['ts'] = '1'; // default to tileset layout
+		$GLOBALS['loc'] = 'main';  // default to main page
+		$GLOBALS['site_dir']['main'] = array( // top level directory
+				'name'=>'Main Menu',
+				'title'=>'Return to main menu',
+				'href'=>'?loc=main',
+				'back'=>'/media/main.png',
+				'sub'=>'main'
+			);
+
+		// _GET any set variables into $GLOBALS
+		foreach($_GET as $k => $v){
+			$GLOBALS[$k] = strtolower(urldecode($v?$v:''));
+		};
+		$GLOBALS['site_dir']['main']['child'] = ini_grab($GLOBALS['webr']);
+		$GLOBALS['curr'] = $GLOBALS['site_dir']['main'];
+	};
+//
+//
+/////////////////////////////////////////////////////////////////
+
+
+
+/////////////////////////////////////////////////////////////////
+// Recursively parse ini files
 //
 	function ini_grab($pth){
 		$arr=parse_ini_file($pth.'/dir.ini', true); // parse directory ini
@@ -13,7 +42,7 @@
 				$arr[$k]['child'] = ini_grab($pth.'/'.$arr[$k]['sub']);
 			};
 		};
-		$GLOBALS['site_dir'] = $arr;
+		return($arr);
 	};
 //
 //
@@ -33,22 +62,21 @@
 				$sdir =& $sdir[$parts[$i]];
 			};
 		};*/
+		// set $GLOBALS['curr']
 		if($GLOBALS['loc']=='main'){
-			$GLOBALS['curr'] = $GLOBALS['site_dir'];
-			include(dirname(__DIR__).'/main.php');
+			$GLOBALS['curr'] = $GLOBALS['site_dir']['main'];
 		} else {
-			get_curr();
-			include(dirname(__DIR__).'/'.$GLOBALS['curr']['sub'].'.php');
+			$GLOBALS['curr'] = $GLOBALS['curr']['child'][$GLOBALS['loc']];
+		};
+		
+		// load the included page
+		if($GLOBALS['ts']==0){
+			include(dirname(__DIR__).'/'.$GLOBALS['loc'].'.php');
+		} else {
+			tileset();
 		};
 	};
-	
-	function get_curr(){
-		if(isset($GLOBALS['curr'])){
-			$GLOBALS['curr'] = $GLOBALS['curr'][$GLOBALS['loc']];
-		} else {
-			$GLOBALS['curr'] = $GLOBALS['site_dir'][$GLOBALS['loc']];
-		};
-	};
+
 //
 //
 /////////////////////////////////////////////////////////////////
@@ -56,25 +84,18 @@
 /////////////////////////////////////////////////////////////////
 // Tile Layout
 //
-	function tiles(){
-		$i=0;
+	function tileset(){
+		$i=1; // tile class number
 		// Tileset div
 		echo "\n".tb('.').'<div class="tileset">';
 		tb('+');
-			$j=0;
-			foreach($GLOBALS['curr'] as $k => $v){
-				++$j;
-				// Tile div
-				echo "\n".tb('.').'<div class="tile '.num2word(++$i).'" style="background-image:url(/media/tile_border.png),url('.$v['back'].');">';
-				tb('+');
-						//echo "\n".tb('.').'<div class="fade">';					
-						//tb('+');
-						echo "\n".tb('.').'<a href="'.$v['href'].'" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
-						tb('-');
-						//echo "\n".tb('.').'</div>';					
-						//tb('-');
-				echo "\n".tb('.').'</div>'."\n";
-				if($i%9==0 && count($GLOBALS['curr'])!=$j){
+			if($GLOBALS['loc']!='main'){
+				tile($GLOBALS['site_dir']['main'],$i++);
+			};
+			foreach($GLOBALS['curr']['child'] as $k => $v){
+				tile($v,$i++);
+				// create new tileset after 9 tiles
+				if($i%9==0 && count($GLOBALS['curr'])!=$i-1){
 					$i=0;
 					tb('-');	
 					echo "\n".tb('.').'</div>'."\n";
@@ -82,10 +103,24 @@
 					tb('+');
 				};
 			};
-			while($i<9){
-				echo "\n".tb('.').'<div class="tile '.num2word(++$i).'"></div>';
+			// populate empty tiles until set filled
+			while($i-1<9){
+				echo "\n".tb('.').'<div class="tile '.num2word($i++).'"></div>';
 			};
 			tb('-');	
+		echo "\n".tb('.').'</div>'."\n";
+	};
+	
+	function tile($v,$i){
+		// Tile div
+		echo "\n".tb('.').'<div class="tile '.num2word($i).'" style="background-image:url(/media/tile_border.png),url('.$v['back'].');">';
+		tb('+');
+				//echo "\n".tb('.').'<div class="fade">';					
+				//tb('+');
+				echo "\n".tb('.').'<a href="'.$v['href'].'" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
+				tb('-');
+				//echo "\n".tb('.').'</div>';					
+				//tb('-');
 		echo "\n".tb('.').'</div>'."\n";
 	};
 //
@@ -95,19 +130,30 @@
 /////////////////////////////////////////////////////////////////
 // Linking
 //
-	function buildlnk($string) {
-		return '?loc='.urlencode(arrpar($string,$GLOBALS['site_dir']));
+	function lnk_build($string) {
+		$p = arr_parse($string,$GLOBALS['site_dir']);
+		$url = urlencode($p);
+		$parts = explode(",",$p);
+		$arr = $GLOBALS['site_dir'];
+		
+		for($i=0;$i<(count($parts)-1);++$i){
+			$arr = $arr[$parts[$i]]['child'];
+		};
+		
+		$arr = $arr[$parts[$i]];
+		
+		echo "\n".tb('.').'<a href="'.$arr['href'].'" title="'.$arr['title'].'"><span>'.$arr['name'].'</span></a>';
 	};
 	
-	function buildplnk($v) {
+	function lnk_pbuild($v) {
 		return buildlnk('Photography').'&amp;sub='.urlencode($v);
 	};
 
-	function lnkimg($string) {
+	function lnk_img($string) {
 	return basename(arrpar($string,$GLOBALS['site_dir']));
 	};
 
-	function proj_lnk($loc) {
+	function lnk_proj($loc) {
 		echo "\n".tb('.').'<h4 class="solid">Projects</h4>';
 		foreach ($loc['child'] as $k => $v) {
 			echo "\n".tb('.').'<a href="'.'?loc='.urlencode(arrpar($GLOBALS['curr']['name'],$GLOBALS['site_dir'])).'&amp;sub='.urlencode($v['href']).'" title="'.$v['title'].'">';
@@ -115,6 +161,54 @@
 			echo "\n".tb('.').'<span class="sub-text">'.$v['title'].'</span></a>';
 		};
 	};
+//
+//
+/////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////
+// Arrays
+//
+function arr_parse($needle,$haystack) {
+	// returns comma list of $needle location in $haystack
+	$ky = arr_parent($needle,$haystack);
+  	if($haystack[$ky]['name']!=$needle){
+		$ky = $ky.','.arr_parse($needle,$haystack[$ky]['child']);
+	}; 
+	return $ky;
+};
+
+// http://stackoverflow.com/questions/2504685/php-find-parent-key-of-array
+function arr_parent($needle,$haystack) {
+	// returns highest parent key of $needle in $haystack
+	foreach($haystack as $k => $v){
+		if(is_array($v)){
+			$found = arr_parent($needle,$v);
+			if($found!==false){
+				return $k;
+			};
+		} else if($k==='name' && $v===$needle){
+			return true;
+		};
+	};
+	return false;
+};
+
+function arr_kname($needle,$haystack) {
+	// returns direct parent key name of $needle in $haystack
+	foreach($haystack as $k => $v){
+		if(is_array($v)){
+			$found = arr_parent($needle,$v);
+			if($found===true){
+				return $k;
+			} else if(is_string($found)){
+				return $found;
+			};
+		} else if($k==='name' && $v===$needle){
+			return true;
+		};
+	};
+	return false;
+};
 //
 //
 /////////////////////////////////////////////////////////////////
@@ -471,24 +565,8 @@ function hbox_code($farr,$fp,$tb){
 /////////////////////////////////////////////////////////////////
 // OTHER
 //
-function arrpar($needle,$haystack) {
-	$ky = rarray_search($needle,$haystack);
-	if($haystack[$ky]['name']!=$needle){
-		$ky = $ky.','.arrpar($needle,$haystack[$ky]['child']);
-	};
-	return $ky;
-};
 
-function rarray_search($needle,$haystack) {
-		foreach($haystack as $key=>$value) {
-				$current_key=$key;
-				if($needle===$value OR (is_array($value) && rarray_search($needle,$value) !== false)) {
-						return $current_key;
-				};
-		};
-		return false;
-};
-
+// html source tab modification
 function tb($m){
 	switch($m){
 		case '+':
@@ -507,10 +585,12 @@ function tb($m){
 	};
 };
 
+// alert div
 function alert($str){
 	echo "\n\n".'<div class="alert">'.$str.'</div>';
 }
 
+// prints all the colors on the page
 function color_pallet($pallet) {
 	foreach($GLOBALS[$pallet] as $k => $v){
 		$i=0;

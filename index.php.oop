@@ -1,0 +1,46 @@
+<?php
+
+class MyClass {
+	public $prop1 = "I'm a class property!";
+	
+	public function __construct(){ // called when obj created
+		echo 'The class "'.__CLASS__.'" was initiated!<br/>';
+	}
+	
+	public function __destruct(){ // called when obj destroyed
+		echo 'The class "'.__CLASS__.'" was destroyed.<br/>';
+	}
+	
+	public function __toString(){
+		echo "Using the toString method: ";
+		return $this->getProperty();
+	}
+	
+	public function setProperty($newval){ // method
+		$this->prop1 = $newval; // self reference using $this
+	}
+	
+	public function getProperty(){ // method
+		return $this->prop1."<br/>"; // self reference using $this
+	}
+};
+
+$obj = new MyClass; // object
+
+echo $obj->getProperty();
+
+$obj->setProperty("I'm a new property value!");
+
+echo $obj;
+
+echo $obj->getProperty();
+
+unset($obj);
+
+echo "EOF<br/>";
+
+//echo "<pre>";
+//var_dump($obj);
+//echo "</pre>";
+
+?>

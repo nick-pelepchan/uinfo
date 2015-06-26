@@ -125,7 +125,7 @@
 		width:38.8%;
 	}
 	
-	.soon {
+	.down {
 		height:60vh;
 		left:12.5%;
 		position:absolute;
@@ -133,7 +133,7 @@
 		width:75%;
 	}
 	
-	.soon-text {
+	.down-text {
 		height:30vh;
 		left:12.5%;
 		font-size:2rem;
@@ -143,6 +143,14 @@
 		text-align:center;
 		top:61.6vh;
 		width:75%;
+	}
+	
+	.return {
+		height:2rem;
+		position:absolute;
+		right:0;
+		top:0;
+		width:11rem;
 	}
 	
 	#debug {

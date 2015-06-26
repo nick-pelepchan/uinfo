@@ -5,7 +5,7 @@ tb('+');
 	echo "\n".tb('.').'<head>';
 	tb('+');
 		echo "\n".tb('.').'<link rel="stylesheet" type="text/css" href="/admin/style.php" media="screen"/>';
-		if($GLOBALS['debug']=='y'){
+		if(isset($GLOBALS['debug'])){
 			echo "\n".tb('.').'<link rel="stylesheet" type="text/css" href="/admin/debug.css"/>';
 		};
 		echo "\n".tb('.').'<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>';

@@ -84,7 +84,6 @@ foreach($base as $arr){
 	};
 };
 
-unset($base);
 $vars = get_defined_vars(); // http://php.net/manual/en/function.get-defined-vars.php#111830
 
 $maroon='rgba(128,0,0,1)';
@@ -253,6 +252,6 @@ $gainsboro='rgba(220,220,220,1)';
 $platinum='rgba(229,228,226,1)';
 $white_smoke='rgba(245,245,245,1)';
 
-$GLOBALS['basic']['basic'] = @array_diff(get_defined_vars(),$vars);
+$GLOBALS['pallet']['basic'] = @array_diff(get_defined_vars(),$vars);
 
 ?>

@@ -6,13 +6,14 @@
 // Includes
 	include(__DIR__.'/admin/functions.php');
 	include(__DIR__.'/admin/vars.php');
+	include(__DIR__.'/admin/geshi/geshi.php');
+	//require_once(__DIR__.'/admin/tadd.php'); // IP logging
+	
+// Custom error handling
+//	set_error_handler("customError",E_ALL);
 
 // Get globals
-	$GLOBALS['debug'] = strtolower(isset($_GET['debug'])?urldecode($_GET['debug']):''); // debug flag
-	$GLOBALS['loc'] = strtolower(isset($_GET['loc'])?urldecode($_GET['loc']):'main'); // location string
-	$GLOBALS['webr'] = __DIR__; // webdir root
-	$GLOBALS['tb'] = '0'; // default indent value
-	ini_grab($GLOBALS['webr']); // site directory array
+	global_build();
 
 // Set cookies
 
@@ -30,17 +31,13 @@
 // Main div
 		echo "\n".tb('.').'<div id="main">'."\n";
 		tb('+');
-			include(__DIR__.'/soon.php');
+			page_set();
 			tb('-');
 		echo "\n".tb('.').'</div>'."\n";
 
 // Debug div
-		if($GLOBALS['debug']!=''){
-			echo "\n".tb('.').'<div id="debug">';
-			tb('+');
-				include(__DIR__.'/admin/debug.php');
-				tb('-');	
-			echo "\n".tb('.').'</div>';
+		if(isset($GLOBALS['debug'])){
+				include(__DIR__.'/inc/div.debug.php');
 		};	
 
 // Close container div
