@@ -1,5 +1,5 @@
 #Unassailable.info
-The entirety of this site is designed with HTML, PHP and CSS  (That's right, no javascript).
+The entirety of this site is designed with HTML, PHP and CSS.
 
 NOTE: Still working out quite a few bugs with the underlying functions.  The site is not live yet.
 
