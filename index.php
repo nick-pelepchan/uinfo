@@ -40,6 +40,11 @@
 				include(__DIR__.'/inc/div.debug.php');
 		};	
 
+// Full screen overlay div
+	if (isset($GLOBALS['zoom'])){
+		include(__DIR__.'/inc/div.zoom.php');
+	};
+		
 // Close container div
 	echo "\n".tb('.').'</div>'."\n";
 	tb('-');	
@@ -50,4 +55,7 @@ echo "\n".tb('.').'</html>';
 	
 // Flush
 	ob_end_flush();
+//	if(isset($GLOBALS['send']) && $GLOBALS['send']==9){
+		session_destroy();
+//	};	
 ?>

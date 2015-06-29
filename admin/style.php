@@ -203,13 +203,24 @@ X:nth-last-child(n) (nth-last-child)
 		overflow:hidden;
 	}
 	
-	.tile a {
+		.rtile {
+		background-color:<?=$prim_lt?>;
+		background-position:center,center,center;
+		background-repeat:no-repeat,no-repeat,no-repeat;
+		-webkit-background-size:100% 100%,cover,cover,;
+		-moz-background-size:100% 100%,cover,cover;
+		-o-background-size:100% 100%,cover,cover;
+		background-size:100% 100%,cover,cover;
+		overflow:hidden;
+	}
+	
+	.tile a, .rtile a {
 		display:block;
 		height:100%;
 		width:100%;
 	}
 	
-	.tile a span {
+	.tile a span, .rtile a span {
 		background:<?=$black?>;
 		color:<?=$white?>;
 		font-family:'Special Elite';
@@ -223,7 +234,7 @@ X:nth-last-child(n) (nth-last-child)
 		word-wrap:break-word;
 	}
 	
-	.tile:hover a span {
+	.tile:hover a span, .rtile:hover a span {
 		color:<?=$sec1_dkr?>;
 	}
 	
@@ -242,69 +253,21 @@ X:nth-last-child(n) (nth-last-child)
 
 
 /* IMAGE GALLERY */
-	#gallery {
-		width:100%;
-		text-align:center;
+	.zoom span {
+		background:none !important;
+		border:none !important;
+		margin:0 !important;
+		padding:0 !important;
+	}
+	
+	.zoom img {
+		display:none;
+		position:relative;
+		z-index:3;
 	}
 
-	#gallery .base {
-		display:inline-block;
-		height:20%;
-		margin:.5em;
-		width:20%;
-		vertical-align:middle;
-	}
-			
-	#gallery .base img{
-		background:<?=$white?>;
-		border:.1em solid <?=$black?>;
-		box-shadow:2px 2px 5px <?=$black5?>;
-		display:block;
-		max-height:20%;
-		padding:.2em;
-	}
-
-	.zoom {
-		background:<?=$black8?>;
-		bottom:0;
-		left:0;
-		position:fixed;
-		right:0;
-		top:0;
-		z-index:100;
-	}
-
-	.zoom img { /*http://www.w3.org/Style/Examples/007/center.en.html */
-		left:50%;
-		margin-right:-50%;
-		max-height:95vh;
-		max-width:95vw;
-		position:fixed;
-		top:50%;
-		transform:translate(-50%,-50%);
-	}
-
-	.zoom .closeimg {
-		background:url(/media/close.png) top left / contain no-repeat;
-		font-size:2em;
-		height:1.5em;
-		position:fixed;
-		right:.5em;
-		top:.5em;
-		width:1.5em;
-	}
-
-	#capbox {
-		background:<?=$black5?>;
-		bottom:0;
-		color:<?=$white?>;
-		left:0;
-		padding:.5em;
-		position:fixed;
-		right:0;
-	}
-
-	/*.img_zoom:focus img { /*http://www.w3.org/Style/Examples/007/center.en.html
+	.zoom:focus img { /*http://www.w3.org/Style/Examples/007/center.en.html*/
+		display:inline;
 		left:50%;
 		margin-right:-50%;
 		max-height:78vh;
@@ -312,7 +275,8 @@ X:nth-last-child(n) (nth-last-child)
 		position:fixed;
 		top:55%;
 		transform:translate(-50%,-50%);
-	}*/
+		z-index:50;
+	}
 
 
 
@@ -363,6 +327,13 @@ X:nth-last-child(n) (nth-last-child)
 		background:<?=$sec2?>;
 	}
 
+/* IPTRACK */
+#map {
+	margin:0 auto;
+	max-height:90vh;
+	max-width:100vh;
+}
+	
 /* UNIVERSAL CLASSES */
 	.alert {
 		background:url(/media/exclaim.png) <?=$comp_ltr?> top left / contain no-repeat;

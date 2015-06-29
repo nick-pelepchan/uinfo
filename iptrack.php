@@ -86,6 +86,7 @@ $jsl = $val."}";
 
 ?>
 
+
 <script>
 	var locations = <?=$jsl?>;
 

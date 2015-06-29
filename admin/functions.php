@@ -7,67 +7,66 @@
 		$GLOBALS['tb'] = '0'; // default indent value
 		$GLOBALS['ts'] = '1'; // default to tileset layout
 		$GLOBALS['loc'] = 'main';  // default to main page
-		$GLOBALS['site_dir']['main'] = array( // top level directory
+
+		// _GET any set variables into $GLOBALS
+		foreach($_GET as $k => $v){
+			$GLOBALS[$k] = strtolower(urldecode($v?$v:''));
+		};
+		
+		// Establish $_SESSION['site_dir'] and $GLOBALS['curr']
+		if(empty($_SESSION['site_dir'])){
+				$_SESSION['site_dir']['main'] = array(
 				'name'=>'Main Menu',
 				'title'=>'Return to main menu',
 				'href'=>'?loc=main',
 				'back'=>'/media/main.png',
 				'sub'=>'main'
 			);
-
-		// _GET any set variables into $GLOBALS
-		foreach($_GET as $k => $v){
-			$GLOBALS[$k] = strtolower(urldecode($v?$v:''));
+			$_SESSION['site_dir']['main']['child'] = ini_grab($GLOBALS['webr']);
 		};
-		$GLOBALS['site_dir']['main']['child'] = ini_grab($GLOBALS['webr']);
-		$GLOBALS['curr'] = $GLOBALS['site_dir']['main'];
+		$GLOBALS['curr'] = $_SESSION['site_dir']['main'];
 	};
 //
 //
 /////////////////////////////////////////////////////////////////
-
-
-
 /////////////////////////////////////////////////////////////////
 // Recursively parse ini files
 //
 	function ini_grab($pth){
 		$arr=parse_ini_file($pth.'/dir.ini', true); // parse directory ini
-
 		// Iterate through array and grab sub menus
-		foreach($arr as $k => $v){
-			$arr[$k]['incpth'] = $pth.'/';
-			$arr[$k]['imgpth'] = str_replace($GLOBALS['webr'],'',$pth).'/';
-			if($arr[$k]['sub']!=''){
+ 		foreach($arr as $k => $v){
+			if(array_key_exists('sub',$arr[$k])){
+				$arr[$k]['incpth'] = $pth.'/'.$arr[$k]['sub'].'/';
+				$arr[$k]['imgpth'] = str_replace($GLOBALS['webr'],'',$pth).'/'.$arr[$k]['sub'].'/';
 				$arr[$k]['child'] = ini_grab($pth.'/'.$arr[$k]['sub']);
 			};
 		};
-		return($arr);
+		return($arr); 
 	};
 //
 //
 /////////////////////////////////////////////////////////////////
-
 /////////////////////////////////////////////////////////////////
-// Set the current page and update $GLOBALS['curr'] - http://stackoverflow.com/questions/2171963/php-array-as-variable-name
+// Update $GLOBALS and set page 
 //
 	function page_set(){
-		/*$parts = explode(",", $l);
-		
-		for ($i = 0, $j = count($parts); $i < $j; ++$i) {
-			if ($i < $j - 1) {
-				$sdir =& $sdir[$parts[$i]]['child'];
-			} else {
-				// last item
-				$sdir =& $sdir[$parts[$i]];
-			};
-		};*/
 		// set $GLOBALS['curr']
 		if($GLOBALS['loc']=='main'){
-			$GLOBALS['curr'] = $GLOBALS['site_dir']['main'];
+			$GLOBALS['parent'] = null;
+			$GLOBALS['curr'] = $_SESSION['site_dir']['main'];
+		} else if($GLOBALS['ts']==0) {
+			$GLOBALS['parent'] = $_SESSION['site_dir']['main'];
+			$GLOBALS['curr'] = arr_keysrch($GLOBALS['loc'],$_SESSION['site_dir']);			
 		} else {
-			$GLOBALS['curr'] = $GLOBALS['curr']['child'][$GLOBALS['loc']];
+			$GLOBALS['parent'] = arr_keysrch(arr_mkey($GLOBALS['loc'],$_SESSION['site_dir']),$_SESSION['site_dir']);
+			$GLOBALS['curr'] = arr_keysrch($GLOBALS['loc'],$_SESSION['site_dir']);
 		};
+
+		// Specific page options
+		if(isset($GLOBALS['pbuild']) && $GLOBALS['pbuild']==1){
+			build_dir_ini();
+		};	
 		
 		// load the included page
 		if($GLOBALS['ts']==0){
@@ -80,23 +79,28 @@
 //
 //
 /////////////////////////////////////////////////////////////////
-
 /////////////////////////////////////////////////////////////////
 // Tile Layout
 //
 	function tileset(){
-		$i=1; // tile class number
+		$i=1; // tile class count
+		$j=0; // overall tile count
 		// Tileset div
 		echo "\n".tb('.').'<div class="tileset">';
 		tb('+');
 			if($GLOBALS['loc']!='main'){
-				tile($GLOBALS['site_dir']['main'],$i++);
+				// set return tile
+				rtile($GLOBALS['parent'],$i);
+				$i++;
+				$j++;
 			};
 			foreach($GLOBALS['curr']['child'] as $k => $v){
-				tile($v,$i++);
+				tile($v,$i);
+				$i++;
+				$j++;
 				// create new tileset after 9 tiles
-				if($i%9==0 && count($GLOBALS['curr'])!=$i-1){
-					$i=0;
+				if($i%10==0 && ($j-1)!=count($GLOBALS['curr']['child'])){
+					$i=1;
 					tb('-');	
 					echo "\n".tb('.').'</div>'."\n";
 					echo "\n".tb('.').'<div class="tileset">';
@@ -104,10 +108,23 @@
 				};
 			};
 			// populate empty tiles until set filled
-			while($i-1<9){
+			while($i<=9){
 				echo "\n".tb('.').'<div class="tile '.num2word($i++).'"></div>';
 			};
 			tb('-');	
+		echo "\n".tb('.').'</div>'."\n";
+	};
+
+	function rtile($v,$i){
+		// Tile div
+		echo "\n".tb('.').'<div class="rtile '.num2word($i).'" style="background-image:url(/media/tile_border.png),url(/media/back_arrow.png),url('.$v['back'].');">';
+		tb('+');
+				//echo "\n".tb('.').'<div class="fade">';					
+				//tb('+');
+				lnk_build($v);
+				tb('-');
+				//echo "\n".tb('.').'</div>';					
+				//tb('-');
 		echo "\n".tb('.').'</div>'."\n";
 	};
 	
@@ -117,7 +134,7 @@
 		tb('+');
 				//echo "\n".tb('.').'<div class="fade">';					
 				//tb('+');
-				echo "\n".tb('.').'<a href="'.$v['href'].'" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
+				lnk_build($v);
 				tb('-');
 				//echo "\n".tb('.').'</div>';					
 				//tb('-');
@@ -126,23 +143,15 @@
 //
 //
 /////////////////////////////////////////////////////////////////
-
 /////////////////////////////////////////////////////////////////
 // Linking
 //
-	function lnk_build($string) {
-		$p = arr_parse($string,$GLOBALS['site_dir']);
-		$url = urlencode($p);
-		$parts = explode(",",$p);
-		$arr = $GLOBALS['site_dir'];
-		
-		for($i=0;$i<(count($parts)-1);++$i){
-			$arr = $arr[$parts[$i]]['child'];
-		};
-		
-		$arr = $arr[$parts[$i]];
-		
-		echo "\n".tb('.').'<a href="'.$arr['href'].'" title="'.$arr['title'].'"><span>'.$arr['name'].'</span></a>';
+	function lnk_build($v) {
+		echo "\n".tb('.').'<a href="'.$v['href'];
+			if(isset($GLOBALS['debug'])){
+				echo '&amp;debug=1';
+			};
+		echo '" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
 	};
 	
 	function lnk_pbuild($v) {
@@ -150,13 +159,13 @@
 	};
 
 	function lnk_img($string) {
-	return basename(arrpar($string,$GLOBALS['site_dir']));
+	return basename(arrpar($string,$_SESSION['site_dir']));
 	};
 
 	function lnk_proj($loc) {
 		echo "\n".tb('.').'<h4 class="solid">Projects</h4>';
 		foreach ($loc['child'] as $k => $v) {
-			echo "\n".tb('.').'<a href="'.'?loc='.urlencode(arrpar($GLOBALS['curr']['name'],$GLOBALS['site_dir'])).'&amp;sub='.urlencode($v['href']).'" title="'.$v['title'].'">';
+			echo "\n".tb('.').'<a href="'.'?loc='.urlencode(arrpar($GLOBALS['curr']['name'],$_SESSION['site_dir'])).'&amp;sub='.urlencode($v['href']).'" title="'.$v['title'].'">';
 			echo "\n".tb('.').'<h5>'.$v['name'].'</h5>';
 			echo "\n".tb('.').'<span class="sub-text">'.$v['title'].'</span></a>';
 		};
@@ -164,33 +173,59 @@
 //
 //
 /////////////////////////////////////////////////////////////////
-
 /////////////////////////////////////////////////////////////////
-// Arrays
+// Array manipulation
 //
 function arr_parse($needle,$haystack) {
 	// returns comma list of $needle location in $haystack
 	$ky = arr_parent($needle,$haystack);
-  	if($haystack[$ky]['name']!=$needle){
+	if($ky!=$needle){
 		$ky = $ky.','.arr_parse($needle,$haystack[$ky]['child']);
-	}; 
+	};
 	return $ky;
+};
+
+function arr_keysrch($needle,$haystack){
+	// returns element's value based on key value
+	foreach($haystack as $k => $v){
+		if($k===$needle){
+			return $v;
+		} else if(is_array($v)) {
+			$rslt = arr_keysrch($needle,$haystack[$k]);
+			if($rslt!==false){
+				return $rslt;
+			};
+		};
+	};
+	return false;
 };
 
 // http://stackoverflow.com/questions/2504685/php-find-parent-key-of-array
 function arr_parent($needle,$haystack) {
 	// returns highest parent key of $needle in $haystack
 	foreach($haystack as $k => $v){
-		if(is_array($v)){
-			$found = arr_parent($needle,$v);
+	if($v===$needle){
+			return true;
+		} else if(is_array($v)){
+			$found = arr_parent($needle,$haystack[$k]);
 			if($found!==false){
 				return $k;
 			};
-		} else if($k==='name' && $v===$needle){
-			return true;
 		};
 	};
 	return false;
+};
+
+function arr_mkey($needle,$haystack){
+	// return major parent key name of $needle in $haystack
+	$i = arr_parse($needle,$haystack);
+	$i = explode(",", $i);
+	$c = count($i)-2;
+	for($j=0;$j<$c;$j++){
+		unset($i[$j]);
+	};
+	unset($i[$j+1]);
+	return $i[$j];
 };
 
 function arr_kname($needle,$haystack) {
@@ -212,144 +247,36 @@ function arr_kname($needle,$haystack) {
 //
 //
 /////////////////////////////////////////////////////////////////
-
 /////////////////////////////////////////////////////////////////
-// GESHI
+// PHOTO GALLERIES
 //
-	function geshi($source,$language){
-		$path='./admin/geshi/geshi';
 
-		$geshi = new GeSHi($source, $language, $path);
-		$geshi->enable_classes();
-		$geshi->set_header_type(GESHI_HEADER_DIV);
-		$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, 2);
-	/*
-		echo '<!--';
-		echo $geshi->get_stylesheet();
-		echo '-->';
-	*/  
-		$rtn = $geshi->parse_code();
-		
-		return $rtn;
-	}
-//
-//
-/////////////////////////////////////////////////////////////////
+function build_dir_ini(){
+	// Builds dir.ini for photo gallery
+	$file = 'dir.ini';
+	$dir = $GLOBALS['curr']['incpth'];
+	if(file_exists($dir.$file)){
+		rename($dir.$file,$dir.$file.'.bak');
+	};
+	$fh = fopen($dir.$file, 'w') or die("can't open file");
+	foreach(glob($GLOBALS['curr']['incpth']."*.jpg") as $filename){
+		$name = basename($filename);
+/* 		$href = '?loc='.$GLOBALS['curr']['sub'].'&amp;zoom='.$name;*/
+		$href = '#" class="zoom" tabindex="1';
+		$back = htmlspecialchars(str_replace($GLOBALS['webr'],'',$filename));
+		$pattern = "/^\[$name\]\n.*\n.*\n/m"; // search for name + 6 lines
+		if(isset($GLOBALS['bpforce']) && preg_match_all($pattern,file_get_contents($dir.$file.'.bak'),$matches)){
+			// copy existing contents to new file
+			fwrite($fh,implode("\n",$matches[0]));
+		} else {		
+			// create new entry
+			fwrite($fh,'['.$name.']'."\n".'name = \'<img src="'.$back.'" alt=""/>\''."\n".'title = \'\''."\n");
+		};
+		fwrite($fh,'href = \''.$href.'\''."\n".'back = \''.$back.'\''."\n\n");
+	};
+	fclose($fh);
+};
 
-/////////////////////////////////////////////////////////////////
-// RSS
-//
-	function rss_filter($sites, $post){
-		if( ! $post ){
-			$sites_filter = $sites;
-			return $sites_filter;
-			break;
-		}
-		$sites_fltr = array();
-		foreach ($sites as $a) {
-			$b = array( 'site' => $a['site'], 'address' => $a['address'], 'cat' => $a['cat'], 'use' => "off", 'count' => $a['count']);
-			foreach ($post as $z => $y) {
-				if ($a['site'] == str_replace("_", " ", $z)) {
-					$b = array( 'site' => $a['site'], 'address' => $a['address'], 'cat' => $a['cat'], 'use' => "on", 'count' => $a['count']);
-				}
-			}
-		array_push($sites_fltr, $b);
-		}
-	return $sites_fltr;
-	}
-
-	function rss_count($sites, $type){
-		$sites_count = array();
-		foreach ($sites as $a => $b){
-			$file = './aggregate/cache/'.$type.'_'.$b['site'];
-			$arr = unserialize(file_get_contents($file));
-			$c = array( 'site' => $b['site'], 'address' => $b['address'], 'cat' => $b['cat'], 'use' => $b['use'], 'count' => count($arr));
-			array_push($sites_count, $c);
-		}
-		return $sites_count;
-	}
-
-	function rss_get($sites, $type){
-		$arrFeeds = array();
-		foreach($sites as $a => $b){
-			if($b['use'] == "on"){
-				$file = './aggregate/cache/'.$type.'_'.$b['site'];
-				$arr = unserialize(file_get_contents($file));
-				array_push($arrFeeds, $arr);
-			}
-		}
-		return $arrFeeds;
-	}
-
-	function rss_catagorize($sites, $cats){
-		$list = array();
-		foreach($cats as $cat){
-			$list[$cat] = array();
-			foreach($sites as $site){
-				if($site['cat'] == $cat){
-					array_push($list[$cat], $site);
-				}
-			}
-		}
-		return $list;
-	}
-
-	function array_collapse($a){
-		$v = array();
-		foreach($a as $main=>$sub){
-			foreach($sub as $vid=>$key){
-				array_push($v, $key);
-			}
-		}
-		return $v;
-	}
-
-	function sort_newsnew($a, $b){
-		return $b['date']-$a['date'];
-	}
-
-	function sort_vidsnew($a, $b){
-		return $b['pub']-$a['pub'];
-	}
-
-	function sort_alpha($a, $b){
-		return strcmp($a['site'], $b['site']);
-	}
-//
-//
-/////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////
-// SQL
-//
-	function sql_conn($query){
-		require(dirname(getcwd()).'/dcon.php');
-		$dbConn = new mysqli($servername, $dbuser, $dbpass, $dbname);
-		unset ($servername, $dbuser, $dbpass, $dbname);
-
-		if($dbConn->connect_error){
-			trigger_error('Unable to connect to database [' . $dbConn->connect_error, E_USER_ERROR . ']');
-		}
-
-		$result = mysqli_query($dbConn, $query);
-		
-		mysqli_close($dbConn);
-		unset($dbConn);
-		
-			/*if(mysqli_query($dbConn, $query)) {
-				echo "Successful";
-			} else {
-				echo "\nError".mysqli_error($dbConn);
-			};*/
-			return($result);
-	}
-//
-//
-/////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////
-// GALLERIES
-//
 function temp(){
 	// Zoom div
 	$imgpth=$GLOBALS['curr']['imgpth'].$GLOBALS['curr']['href'].'/'.$GLOBALS['sub'].'/'.$GLOBALS['img'];
@@ -560,8 +487,137 @@ function hbox_code($farr,$fp,$tb){
 //
 //
 /////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+// GESHI
+//
+	function geshi($source,$language){
+		$path='./admin/geshi/geshi';
 
+		$geshi = new GeSHi($source, $language, $path);
+		$geshi->enable_classes();
+		$geshi->set_header_type(GESHI_HEADER_DIV);
+		$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, 2);
+	/*
+		echo '<!--';
+		echo $geshi->get_stylesheet();
+		echo '-->';
+	*/  
+		$rtn = $geshi->parse_code();
+		
+		return $rtn;
+	}
+//
+//
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+// RSS
+//
+	function rss_filter($sites, $post){
+		if( ! $post ){
+			$sites_filter = $sites;
+			return $sites_filter;
+			break;
+		}
+		$sites_fltr = array();
+		foreach ($sites as $a) {
+			$b = array( 'site' => $a['site'], 'address' => $a['address'], 'cat' => $a['cat'], 'use' => "off", 'count' => $a['count']);
+			foreach ($post as $z => $y) {
+				if ($a['site'] == str_replace("_", " ", $z)) {
+					$b = array( 'site' => $a['site'], 'address' => $a['address'], 'cat' => $a['cat'], 'use' => "on", 'count' => $a['count']);
+				}
+			}
+		array_push($sites_fltr, $b);
+		}
+	return $sites_fltr;
+	}
 
+	function rss_count($sites, $type){
+		$sites_count = array();
+		foreach ($sites as $a => $b){
+			$file = './aggregate/cache/'.$type.'_'.$b['site'];
+			$arr = unserialize(file_get_contents($file));
+			$c = array( 'site' => $b['site'], 'address' => $b['address'], 'cat' => $b['cat'], 'use' => $b['use'], 'count' => count($arr));
+			array_push($sites_count, $c);
+		}
+		return $sites_count;
+	}
+
+	function rss_get($sites, $type){
+		$arrFeeds = array();
+		foreach($sites as $a => $b){
+			if($b['use'] == "on"){
+				$file = './aggregate/cache/'.$type.'_'.$b['site'];
+				$arr = unserialize(file_get_contents($file));
+				array_push($arrFeeds, $arr);
+			}
+		}
+		return $arrFeeds;
+	}
+
+	function rss_catagorize($sites, $cats){
+		$list = array();
+		foreach($cats as $cat){
+			$list[$cat] = array();
+			foreach($sites as $site){
+				if($site['cat'] == $cat){
+					array_push($list[$cat], $site);
+				}
+			}
+		}
+		return $list;
+	}
+
+	function array_collapse($a){
+		$v = array();
+		foreach($a as $main=>$sub){
+			foreach($sub as $vid=>$key){
+				array_push($v, $key);
+			}
+		}
+		return $v;
+	}
+
+	function sort_newsnew($a, $b){
+		return $b['date']-$a['date'];
+	}
+
+	function sort_vidsnew($a, $b){
+		return $b['pub']-$a['pub'];
+	}
+
+	function sort_alpha($a, $b){
+		return strcmp($a['site'], $b['site']);
+	}
+//
+//
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+// SQL
+//
+	function sql_conn($query){
+		require(dirname(getcwd()).'/dcon.php');
+		$dbConn = new mysqli($servername, $dbuser, $dbpass, $dbname);
+		unset ($servername, $dbuser, $dbpass, $dbname);
+
+		if($dbConn->connect_error){
+			trigger_error('Unable to connect to database [' . $dbConn->connect_error, E_USER_ERROR . ']');
+		}
+
+		$result = mysqli_query($dbConn, $query);
+		
+		mysqli_close($dbConn);
+		unset($dbConn);
+		
+			/*if(mysqli_query($dbConn, $query)) {
+				echo "Successful";
+			} else {
+				echo "\nError".mysqli_error($dbConn);
+			};*/
+			return($result);
+	}
+//
+//
+/////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 // OTHER
 //
@@ -772,8 +828,6 @@ function debug_arr($arr){
 //
 //
 /////////////////////////////////////////////////////////////////
-
-
 /////////////////////////////////////////////////////////////////
 // Error handling
 //
@@ -785,8 +839,24 @@ function customError($errno, $errstr)
 //
 //
 /////////////////////////////////////////////////////////////////
-	
+
+
+
+/////////////////////////////////////////////////////////////////
+// Depreciated
 /*
+ http://stackoverflow.com/questions/2171963/php-array-as-variable-name
+		/*$parts = explode(",", $l);
+		
+		for ($i = 0, $j = count($parts); $i < $j; ++$i) {
+			if ($i < $j - 1) {
+				$sdir =& $sdir[$parts[$i]]['child'];
+			} else {
+				// last item
+				$sdir =& $sdir[$parts[$i]];
+			};
+		};
+
 /////////////////////////////////////////////////////////////////
 // Generate navigation menus
 //
@@ -879,9 +949,9 @@ function pg_sub($lvl) {
     echo "\n\t\t\t\t".'</a>';
   }
 }
-*/
 
-    /* BUILD SIDE MENU 
+
+    BUILD SIDE MENU 
 function side_menu($arr,$pg,$pth,$ky,$tb,$fpth){
   // $arr -- sub_grab array
   // $pg  -- PG array
@@ -1119,6 +1189,8 @@ function get_pic($gal,$dw){
 
   return $dirArray;
 }
-*/
 
+*/
+//
+/////////////////////////////////////////////////////////////////
 ?>
