@@ -23,10 +23,6 @@
 // Container div
 	echo "\n".tb('.').'<div id="cont">';
 	tb('+');
-
-// Top bar
-		include(__DIR__.'/topbar.php');
-		tb('+');
 		
 // Main div
 		echo "\n".tb('.').'<div id="main">'."\n";
@@ -35,15 +31,13 @@
 			tb('-');
 		echo "\n".tb('.').'</div>'."\n";
 
+// Top bar
+		include(__DIR__.'/topbar.php');
+
 // Debug div
 		if(isset($GLOBALS['debug'])){
 				include(__DIR__.'/inc/div.debug.php');
 		};	
-
-// Full screen overlay div
-	if (isset($GLOBALS['zoom'])){
-		include(__DIR__.'/inc/div.zoom.php');
-	};
 		
 // Close container div
 	echo "\n".tb('.').'</div>'."\n";

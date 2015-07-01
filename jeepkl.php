@@ -1,7 +1,3 @@
-<?php
-include(__DIR__.'/inc/div.back.php');
-
-?>
 <h1><a href="https://en.wikipedia.org/wiki/Jeep_Cherokee_%28KL%29">14' Jeep Cherokee (KL)</a></h1>
 
 <a href="http://i.wheelsage.org/pictures/j/jeep/cherokee/jeep_cherokee_limited_28.jpg" title="Image Source" target="_blank"><img src="./media/jeep_cherokee_limited_28.jpg" alt="Jeep Cherokee KL"></a>

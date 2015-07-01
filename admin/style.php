@@ -183,12 +183,35 @@ X:nth-last-child(n) (nth-last-child)
 	
 /* BACK DIV */
 	#back {
-		background:<?=$black?>;
+		background:<?=$white?>;
+		border:5px solid <?=$black?>;
 	}
 	
 	#back img {
 		vertical-align:middle;
 		max-height:1.5rem;
+	}
+	
+	.return a {
+		display:block;
+		height:100%;
+		width:100%;
+	}
+	
+	.return a span {
+		color:<?=$black?>;
+		font-family:'Special Elite';
+		font-size:2rem;
+		font-variant:small-caps;
+		left:.3em;
+		position:absolute;
+		text-align:left;
+		top:.05em;
+		word-wrap:break-word;
+	}
+	
+	.return:hover a span {
+		color:<?=$comp_dkr?>;
 	}
 	
 /* TILES */
@@ -221,13 +244,15 @@ X:nth-last-child(n) (nth-last-child)
 	}
 	
 	.tile a span, .rtile a span {
-		background:<?=$black?>;
-		color:<?=$white?>;
+		background:<?=$white?>;
+		border-bottom:5px solid <?=$black?>;
+		border-right:5px solid <?=$black?>;
+		color:<?=$black?>;
 		font-family:'Special Elite';
 		font-size:2rem;
 		font-variant:small-caps;
 		left:.1em;
-		padding:.1em;
+		padding:.2em .1em .1em .1em;
 		position:absolute;
 		text-align:left;
 		top:.1em;
@@ -235,7 +260,7 @@ X:nth-last-child(n) (nth-last-child)
 	}
 	
 	.tile:hover a span, .rtile:hover a span {
-		color:<?=$sec1_dkr?>;
+		color:<?=$comp_dkr?>;
 	}
 	
 /* DEBUG */
@@ -267,11 +292,13 @@ X:nth-last-child(n) (nth-last-child)
 	}
 
 	.zoom:focus img { /*http://www.w3.org/Style/Examples/007/center.en.html*/
+		background:<?=$black5?>;
 		display:inline;
 		left:50%;
 		margin-right:-50%;
 		max-height:78vh;
 		max-width:95vw;
+		padding:50vh 50vw;
 		position:fixed;
 		top:55%;
 		transform:translate(-50%,-50%);

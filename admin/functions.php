@@ -101,10 +101,10 @@
 				// create new tileset after 9 tiles
 				if($i%10==0 && ($j-1)!=count($GLOBALS['curr']['child'])){
 					$i=1;
-					tb('-');	
+/* 					tb('-');	
 					echo "\n".tb('.').'</div>'."\n";
 					echo "\n".tb('.').'<div class="tileset">';
-					tb('+');
+					tb('+'); */
 				};
 			};
 			// populate empty tiles until set filled
@@ -134,7 +134,11 @@
 		tb('+');
 				//echo "\n".tb('.').'<div class="fade">';					
 				//tb('+');
-				lnk_build($v);
+				if($GLOBALS['parent']['sub']=='photo'){
+					lnk_button($v);
+				} else {
+					lnk_build($v);
+				};
 				tb('-');
 				//echo "\n".tb('.').'</div>';					
 				//tb('-');
@@ -144,7 +148,7 @@
 //
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-// Linking
+// Hyperlinking
 //
 	function lnk_build($v) {
 		echo "\n".tb('.').'<a href="'.$v['href'];
@@ -152,6 +156,10 @@
 				echo '&amp;debug=1';
 			};
 		echo '" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
+	};
+	
+	function lnk_button($v) {
+		echo "\n".tb('.').'<a type="'.$v['href'].' " title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
 	};
 	
 	function lnk_pbuild($v) {
@@ -262,7 +270,7 @@ function build_dir_ini(){
 	foreach(glob($GLOBALS['curr']['incpth']."*.jpg") as $filename){
 		$name = basename($filename);
 /* 		$href = '?loc='.$GLOBALS['curr']['sub'].'&amp;zoom='.$name;*/
-		$href = '#" class="zoom" tabindex="1';
+		$href = 'button" tabindex="1" class="zoom';
 		$back = htmlspecialchars(str_replace($GLOBALS['webr'],'',$filename));
 		$pattern = "/^\[$name\]\n.*\n.*\n/m"; // search for name + 6 lines
 		if(isset($GLOBALS['bpforce']) && preg_match_all($pattern,file_get_contents($dir.$file.'.bak'),$matches)){
