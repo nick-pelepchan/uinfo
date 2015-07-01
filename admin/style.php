@@ -184,12 +184,16 @@ X:nth-last-child(n) (nth-last-child)
 /* BACK DIV */
 	#back {
 		background:<?=$white?>;
-		border:5px solid <?=$black?>;
+		border:3px solid <?=$black?>;
 	}
 	
 	#back img {
 		vertical-align:middle;
 		max-height:1.5rem;
+	}
+	
+	#back:hover {
+		background:<?=$comp_lt?>;
 	}
 	
 	.return a {
@@ -203,15 +207,11 @@ X:nth-last-child(n) (nth-last-child)
 		font-family:'Special Elite';
 		font-size:2rem;
 		font-variant:small-caps;
-		left:.3em;
+		left:.1em;
 		position:absolute;
 		text-align:left;
-		top:.05em;
+		top:0;
 		word-wrap:break-word;
-	}
-	
-	.return:hover a span {
-		color:<?=$comp_dkr?>;
 	}
 	
 /* TILES */
@@ -237,6 +237,10 @@ X:nth-last-child(n) (nth-last-child)
 		overflow:hidden;
 	}
 	
+	.btile {
+		background:url(/media/dots.png);
+	}
+	
 	.tile a, .rtile a {
 		display:block;
 		height:100%;
@@ -252,6 +256,7 @@ X:nth-last-child(n) (nth-last-child)
 		font-size:2rem;
 		font-variant:small-caps;
 		left:.1em;
+		line-height:1.8rem;
 		padding:.2em .1em .1em .1em;
 		position:absolute;
 		text-align:left;
@@ -259,8 +264,16 @@ X:nth-last-child(n) (nth-last-child)
 		word-wrap:break-word;
 	}
 	
+	.tile a span:first-letter, .rtile a span:first-letter, .return a span:first-letter {
+		color:<?=$sec2_dk?>;
+		font-size:1.25em;
+		font-style:italic;
+		padding-right:.1em;
+		text-shadow:2px 2px 0px <?=$black?>, -2px 2px 0px <?=$black?>, 2px -2px 0px <?=$black?>, -2px -2px 0px <?=$black?>;
+}
+	
 	.tile:hover a span, .rtile:hover a span {
-		color:<?=$comp_dkr?>;
+		background-color:<?=$comp_lt?>;
 	}
 	
 /* DEBUG */

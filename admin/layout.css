@@ -11,7 +11,7 @@
 	*/
 
 <?php	
-/* // ROWS & COLUMNS
+// ROWS & COLUMNS
 	$lr1='.8vh';
 	$lr2='31.6vh';
 	$lr3='62.4vh';
@@ -19,7 +19,7 @@
 	$lc2='20.6%';
 	$lc3='40.4%';
 	$lc4='60.2%';
-	$lc5='80%'; */
+	$lc5='80%';
 ?>
 	
 	body {
@@ -50,7 +50,7 @@
 	}
 	
 	#back {
-		height:2rem;
+		height:2.3rem;
 		position:absolute;
 		right:.2vw;
 		top:.2vh;
@@ -69,7 +69,7 @@
 		z-index:3;
 	}
 	
-	.tile, .rtile {
+	.tile, .rtile, .btile {
 		float:left;
 		margin:.8vh 0 0 .8%;
 		position:relative;
@@ -127,79 +127,6 @@
 		margin-top:-30vh;
 		width:38.8%;
 	}
-	
-/* 	
-	.one {
-		height:60.8vh;
-		left:<?=$lc1?>;
-		position:absolute;
-		top:<?=$lr1?>;
-		width:19%;
-	}
-	
-	.two {
-		height:30vh;
-		left:<?=$lc2?>;
-		position:absolute;
-		top:<?=$lr1?>;
-		width:38.8%;
-	}
-	
-	.three {
-		height:60.8vh;
-		left:<?=$lc4?>;
-		position:absolute;
-		top:<?=$lr1?>;
-		width:19%;
-	}
-	
-	.four {
-		height:30vh;
-		left:<?=$lc5?>;
-		position:absolute;
-		top:<?=$lr1?>;
-		width:19%;
-	}
-	
-	.five {
-		height:60.8vh;
-		left:<?=$lc2?>;
-		position:absolute;
-		top:<?=$lr2?>;
-		width:19%;
-	}
-	
-	.six {
-		height:30vh;
-		left:<?=$lc3?>;
-		position:absolute;
-		top:<?=$lr2?>;
-		width:19%;
-	}
-	
-	.seven {
-		height:60.8vh;
-		left:<?=$lc5?>;
-		position:absolute;
-		top:<?=$lr2?>;
-		width:19%;
-	}
-	
-	.eight {
-		height:30vh;
-		left:<?=$lc1?>;
-		position:absolute;
-		top:<?=$lr3?>;
-		width:19%;
-	}
-	
-	.nine {
-		height:30vh;
-		left:<?=$lc3?>;
-		position:absolute;
-		top:<?=$lr3?>;
-		width:38.8%;
-	} */
 	
 	.down {
 		height:60vh;

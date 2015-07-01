@@ -109,7 +109,7 @@
 			};
 			// populate empty tiles until set filled
 			while($i<=9){
-				echo "\n".tb('.').'<div class="tile '.num2word($i++).'"></div>';
+				echo "\n".tb('.').'<div class="btile '.num2word($i++).'"></div>';
 			};
 			tb('-');	
 		echo "\n".tb('.').'</div>'."\n";
