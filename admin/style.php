@@ -86,23 +86,28 @@ X:nth-last-child(n) (nth-last-child)
 	}
 
 	h1 {
-		font-size:1.9rem;
+		font-size:2.2rem;
+		line-height:2.3rem;
 	}
 
 	h2 {
-		font-size:1.7rem;
+		font-size:2rem;
+		line-height:2.1rem;
 	}
 
 	h3 {
-		font-size:1.5rem;
+		font-size:1.8rem;
+		line-height:1.9rem;
 	}
 
 	h4 {
-		font-size:1.3rem;
+		font-size:1.6rem;
+		line-height:1.7rem;
 	}
 
 	h5 {
-		font-size:1.1rem;
+		font-size:1.4rem;
+		line-height:1.5rem;
 	}
 
 	/* horizontal rule */
@@ -132,7 +137,7 @@ X:nth-last-child(n) (nth-last-child)
 
 	/* text blocks */
 	p {
-		margin:0 .5em 1em .5em;
+		margin:0 .5em .5em .5em;
 		text-indent:1.5em;
 	}
 
@@ -155,11 +160,22 @@ X:nth-last-child(n) (nth-last-child)
 		top:.3em;
 		font-size:.8em;
 	}
+	
+	/* lists */
+	ul {
+		list-style-type:circle;
+		margin:0 0 .5em 1em;
+	}
 
 	/* images */
 	img {
 		max-height:calc( 100vh - ( 2.9rem + 4px ) );
 		max-width:100%;
+	}
+	
+	img.center {
+		display:block;
+		margin:1vh auto;
 	}
 
 /* CONTAINER */
@@ -175,7 +191,7 @@ X:nth-last-child(n) (nth-last-child)
 		font-size:1rem; /* SECTION'S ROOT FONT SIZE */
 	}
 	
-	#topbar img {
+	#topbar .logo {
 		background:<?=$sec2?>;
 		border-bottom:3px solid <?=$black?>;
 		border-right:3px solid <?=$black?>;
@@ -189,9 +205,12 @@ X:nth-last-child(n) (nth-last-child)
 		border-left:3px solid <?=$black?>;
 	}
 	
-	#back img {
-		vertical-align:middle;
-		max-height:1.5rem;
+	#back .arrow {
+		border:none;
+		display:inline;
+		vertical-align:bottom;
+		max-height:1.8rem;
+		padding:.1rem;
 	}
 	
 	#back:hover {
@@ -199,7 +218,7 @@ X:nth-last-child(n) (nth-last-child)
 	}
 	
 	.return a {
-		display:block;
+		display:inline;
 		height:100%;
 		width:100%;
 	}
@@ -209,10 +228,7 @@ X:nth-last-child(n) (nth-last-child)
 		font-family:'Special Elite';
 		font-size:2rem;
 		font-variant:small-caps;
-		left:.1em;
-		position:absolute;
 		text-align:left;
-		top:0;
 		word-wrap:break-word;
 	}
 	
@@ -312,11 +328,32 @@ X:nth-last-child(n) (nth-last-child)
 
 /* MAIN */
 	#main {
-		font-size:1rem; /* SECTION'S ROOT FONT SIZE */
-		line-height:1.2rem;
-		text-align:justify;
+		font-size:1.2rem; /* SECTION'S ROOT FONT SIZE */
+		line-height:1.3rem;
 		word-wrap: break-word;
 	}
+
+/* SIDE MENU */
+		.sidem {
+			height:100%;
+			padding:0 1vw 0 0;
+			width:calc(25% - 2vw);
+		}
+		
+		.sidem li:hover a span {
+			color:<?=$comp?>;
+		}
+		
+		.sidem a span {
+			color:<?=$prim_dk?>;
+			font-size:.9em;
+			text-align:left;
+			word-wrap:none;
+		}
+		
+		.sidec {
+			width:75%;
+		}
 
 
 /* IMAGE GALLERY */
@@ -512,6 +549,10 @@ X:nth-last-child(n) (nth-last-child)
 
 	.tr {
 		text-align:right;
+	}
+	
+	.w50 {
+		width:50%;
 	}
 	
 <?php include(__DIR__.'/geshi.php');?>

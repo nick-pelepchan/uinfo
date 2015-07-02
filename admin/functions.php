@@ -1,12 +1,12 @@
 <?php
 /////////////////////////////////////////////////////////////////
-// build GLOBALS['site_dir']
+// Get GLOBALS and site_dir
 //
 	function global_build(){
-		$GLOBALS['webr']=dirname(__DIR__); // web root dir
-		$GLOBALS['tb'] = '0'; // default indent value
+		$GLOBALS['webr']=dirname(__DIR__); // web root
+		$GLOBALS['tb'] = '0'; // initial indent value
 		$GLOBALS['ts'] = '1'; // default to tileset layout
-		$GLOBALS['loc'] = 'main';  // default to main page
+		$GLOBALS['loc'] = 'main';  // default page
 
 		// _GET any set variables into $GLOBALS
 		foreach($_GET as $k => $v){
@@ -20,11 +20,12 @@
 				'title'=>'Return to main menu',
 				'href'=>'?loc=main',
 				'back'=>'/media/main.png',
-				'sub'=>'main'
+				'sub'=>'main',
+				'incpth'=>dirname(__DIR__).'/',
+				'imgpth'=>'/media/'
 			);
 			$_SESSION['site_dir']['main']['child'] = ini_grab($GLOBALS['webr']);
 		};
-		$GLOBALS['curr'] = $_SESSION['site_dir']['main'];
 	};
 //
 //
@@ -48,19 +49,29 @@
 //
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
+// Determine location 
+//
+	function loc_parse(){
+		$_SESSION['loc'] = explode(",", $GLOBALS['loc']);
+	};
+//
+//
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // Update $GLOBALS and set page 
 //
 	function page_set(){
+		loc_parse();
 		// set $GLOBALS['curr']
-		if($GLOBALS['loc']=='main'){
+		if($_SESSION['loc']=='main'){
 			$GLOBALS['parent'] = null;
 			$GLOBALS['curr'] = $_SESSION['site_dir']['main'];
-		} else if($GLOBALS['ts']==0) {
+		} else if(count($_SESSION['loc'])==1){
 			$GLOBALS['parent'] = $_SESSION['site_dir']['main'];
-			$GLOBALS['curr'] = arr_keysrch($GLOBALS['loc'],$_SESSION['site_dir']);			
+			$GLOBALS['curr'] = arr_keysrch($_SESSION['loc'][count($_SESSION['loc'])-1],$_SESSION['site_dir']);
 		} else {
-			$GLOBALS['parent'] = arr_keysrch(arr_mkey($GLOBALS['loc'],$_SESSION['site_dir']),$_SESSION['site_dir']);
-			$GLOBALS['curr'] = arr_keysrch($GLOBALS['loc'],$_SESSION['site_dir']);
+			$GLOBALS['parent'] = arr_keysrch($_SESSION['loc'][count($_SESSION['loc'])-2],$_SESSION['site_dir']);
+			$GLOBALS['curr'] = arr_keysrch($_SESSION['loc'][count($_SESSION['loc'])-1],$_SESSION['site_dir']);
 		};
 
 		// Specific page options
@@ -70,7 +81,7 @@
 		
 		// load the included page
 		if($GLOBALS['ts']==0){
-			include(dirname(__DIR__).'/'.$GLOBALS['loc'].'.php');
+			include($GLOBALS['parent']['incpth'].$_SESSION['loc'][count($_SESSION['loc'])-1].'.php');
 		} else {
 			tileset();
 		};
@@ -121,17 +132,7 @@
 		tb('+');
 			$rand = rand(-15,15);
 			// lnk_build
-			echo "\n".tb('.').'<a href="'.$v['href'];
-				if(isset($GLOBALS['debug'])){
-					echo '&amp;debug=1';
-				};
-				echo '"><span>'.$v['name'].'</span>';
-				echo "\n".tb('.').'<div class="pop-title" style="-moz-transform: rotate('.$rand.'deg);-ms-transform: rotate('.$rand.'deg);-o-transform: rotate('.$rand.'deg);-webkit-transform:rotate('.$rand.'deg);">';					
-				tb('+');
-					echo "\n".tb('.').$v['title'];
-					tb('-');
-				echo "\n".tb('.').'</div>';	
-			echo "\n".tb('.').'</a>';
+				lnk_build($v,0,"\n".tb('.').'<div class="pop-title" style="-moz-transform: rotate('.$rand.'deg);-ms-transform: rotate('.$rand.'deg);-o-transform: rotate('.$rand.'deg);-webkit-transform:rotate('.$rand.'deg);">'.$v['title'].'</div>');
 			tb('-');
 		echo "\n".tb('.').'</div>'."\n";
 	};
@@ -146,17 +147,7 @@
 				echo "\n".tb('.').'<a type="'.$v['href'].' "><span>'.$v['name'].'</span></a>';
 			} else {
 				// lnk_build
-				echo "\n".tb('.').'<a href="'.$v['href'];
-					if(isset($GLOBALS['debug'])){
-						echo '&amp;debug=1';
-					};
-					echo '"><span>'.$v['name'].'</span>';
-					echo "\n".tb('.').'<div class="pop-title" style="-moz-transform: rotate('.$rand.'deg);-ms-transform: rotate('.$rand.'deg);-o-transform: rotate('.$rand.'deg);-webkit-transform:rotate('.$rand.'deg);">';					
-					tb('+');
-						echo "\n".tb('.').$v['title'];
-						tb('-');
-					echo "\n".tb('.').'</div>';	
-				echo "\n".tb('.').'</a>';
+				lnk_build($v,0,"\n".tb('.').'<div class="pop-title" style="-moz-transform: rotate('.$rand.'deg);-ms-transform: rotate('.$rand.'deg);-o-transform: rotate('.$rand.'deg);-webkit-transform:rotate('.$rand.'deg);">'.$v['title'].'</div>');
 			};
 			tb('-');
 		echo "\n".tb('.').'</div>'."\n";
@@ -167,12 +158,24 @@
 /////////////////////////////////////////////////////////////////
 // Hyperlinking
 //
-	function lnk_build($v) {
+	function lnk_build($v,$t=1,$oth) {
 		echo "\n".tb('.').'<a href="'.$v['href'];
+			// Keep any set debug options across links
 			if(isset($GLOBALS['debug'])){
-				echo '&amp;debug=1';
+				echo '&amp;debug='.$GLOBALS['debug'];
 			};
-		echo '" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
+			if(isset($GLOBALS['opt'])){
+				echo '&amp;opt='.$GLOBALS['opt'];
+			};
+		echo '"';
+		// Insert link title if required
+		if($t==1){
+			echo ' title="'.$v['title'].'"';
+		};
+		echo '><span>'.$v['name'].'</span>';
+			// Includes withing the hyperlink
+			echo $oth;
+		echo "\n".tb('.').'</a>';	
 	};
 	
 	function lnk_button($v) {
@@ -187,13 +190,21 @@
 	return basename(arrpar($string,$_SESSION['site_dir']));
 	};
 
-	function lnk_proj($loc) {
-		echo "\n".tb('.').'<h4 class="solid">Projects</h4>';
-		foreach ($loc['child'] as $k => $v) {
-			echo "\n".tb('.').'<a href="'.'?loc='.urlencode(arrpar($GLOBALS['curr']['name'],$_SESSION['site_dir'])).'&amp;sub='.urlencode($v['href']).'" title="'.$v['title'].'">';
-			echo "\n".tb('.').'<h5>'.$v['name'].'</h5>';
-			echo "\n".tb('.').'<span class="sub-text">'.$v['title'].'</span></a>';
+	function lnk_proj($arr) {
+		echo "\n".tb('.').'<ul>';
+		tb('+');
+		foreach ($arr as $k => $v) {
+			echo "\n".tb('.').'<li>';
+			tb('+');
+				echo "\n".tb('.').'<a href="'.$v['href'].'" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
+				tb('-');
+			echo "\n".tb('.').'</li>';
+			if(isset($v['sub'])){
+				lnk_proj($v['child']);
+			};
 		};
+		tb('-');
+	echo "\n".tb('.').'</ul>';
 	};
 //
 //

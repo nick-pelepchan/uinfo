@@ -6,13 +6,13 @@
 // Includes
 	include(__DIR__.'/admin/functions.php');
 	include(__DIR__.'/admin/vars.php');
-	include(__DIR__.'/admin/geshi/geshi.php');
+	//include(__DIR__.'/admin/geshi/geshi.php');
 	//require_once(__DIR__.'/admin/tadd.php'); // IP logging
 	
 // Custom error handling
 //	set_error_handler("customError",E_ALL);
 
-// Get globals
+// Get GLOBALS and site_dir
 	global_build();
 
 // Set cookies
