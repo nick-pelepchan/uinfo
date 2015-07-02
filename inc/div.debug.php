@@ -11,9 +11,6 @@ tb('+');
 	<div style="display:inline-block;vertical-align:top;">
 		<?=color_pallet('pallet');?>
 	</div>
-	<div style="display:inline-block;vertical-align:top;">
-		<?=color_pallet('basic');?>
-	</div>
 	<div class="comp-box">
 		<?=$hr?>
 		<?=$lorem?>
@@ -22,9 +19,6 @@ tb('+');
 		<div style="display:inline-block;vertical-align:top;">
 			<?=color_pallet('pallet');?>
 			</div>
-			<div style="display:inline-block;vertical-align:top;">
-				<?=color_pallet('basic');?>
-		</div>
 	</div>
 
 <?php

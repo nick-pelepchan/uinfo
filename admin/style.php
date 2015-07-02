@@ -172,19 +172,21 @@ X:nth-last-child(n) (nth-last-child)
 
 /* TOP BAR */
 	#topbar {
-		background:<?=$back?>;
-		border-bottom:2px dotted <?=$sec1_dkr?>;
 		font-size:1rem; /* SECTION'S ROOT FONT SIZE */
 	}
 	
 	#topbar img {
+		background:<?=$sec2?>;
+		border-bottom:3px solid <?=$black?>;
+		border-right:3px solid <?=$black?>;
 		max-height:6vh;
 	}
 	
 /* BACK DIV */
 	#back {
-		background:<?=$white?>;
-		border:3px solid <?=$black?>;
+		background:<?=$sec2?>;
+		border-bottom:3px solid <?=$black?>;
+		border-left:3px solid <?=$black?>;
 	}
 	
 	#back img {
@@ -215,58 +217,81 @@ X:nth-last-child(n) (nth-last-child)
 	}
 	
 /* TILES */
-	.tile {
+	.tile, .rtile {
 		background-color:<?=$prim_lt?>;
+		color:<?=$black?>;
+		font-family:'Special Elite';
+		font-size:2rem;
+		font-variant:small-caps;
+		line-height:1.8rem;
+		overflow:hidden;
+		text-align:left;
+	}
+	
+	.tile {
 		background-position:0px 0px,center;
 		background-repeat:no-repeat,no-repeat;
 		-webkit-background-size:100% 100%,cover,;
 		-moz-background-size:100% 100%,cover;
 		-o-background-size:100% 100%,cover;
 		background-size:100% 100%,cover;
-		overflow:hidden;
 	}
 	
 		.rtile {
-		background-color:<?=$prim_lt?>;
 		background-position:center,center,center;
 		background-repeat:no-repeat,no-repeat,no-repeat;
 		-webkit-background-size:100% 100%,cover,cover,;
 		-moz-background-size:100% 100%,cover,cover;
 		-o-background-size:100% 100%,cover,cover;
 		background-size:100% 100%,cover,cover;
-		overflow:hidden;
 	}
 	
 	.btile {
 		background:url(/media/dots.png);
 	}
+
+	.tile .pop-title, .rtile .pop-title {
+		background-image:url(/media/pow-md.png);
+		background-position:center;
+		background-repeat:no-repeat;
+		background-size:90% 90%;
+		bottom:0;
+		color:<?=$yellow?>;
+		display:none;
+		font-weight:bold;
+		overflow:visible;
+		padding:5rem 1rem 3rem 0;
+		position:absolute;
+		right:0;
+		text-align:center;
+		text-shadow:2px 2px 0px <?=$black?>, -2px 2px 0px <?=$black?>, 2px -2px 0px <?=$black?>, -2px -2px 0px <?=$black?>;
+		vertical-align:middle;
+		width:70%;
+		z-index:0;
+	}
 	
 	.tile a, .rtile a {
+		color:<?=$black?>;
 		display:block;
 		height:100%;
 		width:100%;
+		z-index:1;
 	}
 	
 	.tile a span, .rtile a span {
 		background:<?=$white?>;
 		border-bottom:5px solid <?=$black?>;
 		border-right:5px solid <?=$black?>;
-		color:<?=$black?>;
-		font-family:'Special Elite';
-		font-size:2rem;
-		font-variant:small-caps;
 		left:.1em;
-		line-height:1.8rem;
 		padding:.2em .1em .1em .1em;
 		position:absolute;
-		text-align:left;
 		top:.1em;
 		word-wrap:break-word;
 	}
 	
 	.tile a span:first-letter, .rtile a span:first-letter, .return a span:first-letter {
-		color:<?=$sec2_dk?>;
-		font-size:1.25em;
+		color:<?=$prim?>;
+		font-size:1.3em;
 		font-style:italic;
 		padding-right:.1em;
 		text-shadow:2px 2px 0px <?=$black?>, -2px 2px 0px <?=$black?>, 2px -2px 0px <?=$black?>, -2px -2px 0px <?=$black?>;
@@ -274,6 +299,10 @@ X:nth-last-child(n) (nth-last-child)
 	
 	.tile:hover a span, .rtile:hover a span {
 		background-color:<?=$comp_lt?>;
+	}
+	
+	.tile:hover .pop-title, .rtile:hover .pop-title {
+		display:inline !important;
 	}
 	
 /* DEBUG */

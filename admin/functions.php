@@ -119,12 +119,20 @@
 		// Tile div
 		echo "\n".tb('.').'<div class="rtile '.num2word($i).'" style="background-image:url(/media/tile_border.png),url(/media/back_arrow.png),url('.$v['back'].');">';
 		tb('+');
-				//echo "\n".tb('.').'<div class="fade">';					
-				//tb('+');
-				lnk_build($v);
-				tb('-');
-				//echo "\n".tb('.').'</div>';					
-				//tb('-');
+			$rand = rand(-15,15);
+			// lnk_build
+			echo "\n".tb('.').'<a href="'.$v['href'];
+				if(isset($GLOBALS['debug'])){
+					echo '&amp;debug=1';
+				};
+				echo '"><span>'.$v['name'].'</span>';
+				echo "\n".tb('.').'<div class="pop-title" style="-moz-transform: rotate('.$rand.'deg);-ms-transform: rotate('.$rand.'deg);-o-transform: rotate('.$rand.'deg);-webkit-transform:rotate('.$rand.'deg);">';					
+				tb('+');
+					echo "\n".tb('.').$v['title'];
+					tb('-');
+				echo "\n".tb('.').'</div>';	
+			echo "\n".tb('.').'</a>';
+			tb('-');
 		echo "\n".tb('.').'</div>'."\n";
 	};
 	
@@ -132,16 +140,25 @@
 		// Tile div
 		echo "\n".tb('.').'<div class="tile '.num2word($i).'" style="background-image:url(/media/tile_border.png),url('.$v['back'].');">';
 		tb('+');
-				//echo "\n".tb('.').'<div class="fade">';					
-				//tb('+');
-				if($GLOBALS['parent']['sub']=='photo'){
-					lnk_button($v);
-				} else {
-					lnk_build($v);
-				};
-				tb('-');
-				//echo "\n".tb('.').'</div>';					
-				//tb('-');
+			$rand = rand(-15,15);
+			if($GLOBALS['parent']['sub']=='photo'){
+				// lnk_button
+				echo "\n".tb('.').'<a type="'.$v['href'].' "><span>'.$v['name'].'</span></a>';
+			} else {
+				// lnk_build
+				echo "\n".tb('.').'<a href="'.$v['href'];
+					if(isset($GLOBALS['debug'])){
+						echo '&amp;debug=1';
+					};
+					echo '"><span>'.$v['name'].'</span>';
+					echo "\n".tb('.').'<div class="pop-title" style="-moz-transform: rotate('.$rand.'deg);-ms-transform: rotate('.$rand.'deg);-o-transform: rotate('.$rand.'deg);-webkit-transform:rotate('.$rand.'deg);">';					
+					tb('+');
+						echo "\n".tb('.').$v['title'];
+						tb('-');
+					echo "\n".tb('.').'</div>';	
+				echo "\n".tb('.').'</a>';
+			};
+			tb('-');
 		echo "\n".tb('.').'</div>'."\n";
 	};
 //
@@ -663,7 +680,7 @@ function color_pallet($pallet) {
 			++$i;
 			echo '<a role="button" title="'.$l.' ('.$w.')" style="background:'.$w.';display:inline-block;margin:1px;height:20px;width:20px;"></a>';
 			if($i %10 == 0){
-				echo '<br>';
+				echo '<br/>';
 			};
 		};
 		echo '</div>';

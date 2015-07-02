@@ -1,7 +1,5 @@
 <?php
 
-include(__DIR__.'/inc/div.back.php');
-
 // colors
 $mfill = $GLOBALS['pallet']['prim']['prim'];
 $mstroke = $GLOBALS['pallet']['prim_dk']['prim_dk'];
