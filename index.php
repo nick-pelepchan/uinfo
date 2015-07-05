@@ -4,8 +4,8 @@
 	session_start();
 
 // Includes
-	include(__DIR__.'/admin/functions.php');
-	include(__DIR__.'/admin/vars.php');
+	include(__DIR__.'/inc/function.php');
+	include(__DIR__.'/inc/var.global.php');
 	//include(__DIR__.'/admin/geshi/geshi.php');
 	//require_once(__DIR__.'/admin/tadd.php'); // IP logging
 	

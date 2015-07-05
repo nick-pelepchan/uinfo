@@ -5,12 +5,12 @@ header("Content-type: text/css");
 
 /* !!! ORDERED BY HIERARCHY !!! */
 <?php
-include(__DIR__.'/colors.php');
-include(__DIR__.'/vars.php');
-include(__DIR__.'/resets.css');
-include(__DIR__.'/layout.css');
-include(__DIR__.'/font.css');
-include(__DIR__.'/media.css');
+include(__DIR__.'/var.color.php');
+include(__DIR__.'/var.global.php');
+include(__DIR__.'/css.resets.css');
+include(__DIR__.'/css.layout.css');
+include(__DIR__.'/css.font.css');
+include(__DIR__.'/css.media.css');
 
 $back = $ghost_white;
 /* http://code.tutsplus.com/tutorials/the-30-css-selectors-you-must-memorize--net-16048
@@ -163,13 +163,18 @@ X:nth-last-child(n) (nth-last-child)
 	
 	/* lists */
 	ul {
-		list-style-type:circle;
+		list-style-type:disc;
 		margin:0 0 .5em 1em;
+	}
+	
+	ul.none {
+		list-style-type:none;
+		margin:0 0 .5em .5em;
 	}
 
 	/* images */
 	img {
-		max-height:calc( 100vh - ( 2.9rem + 4px ) );
+		max-height:95vh;
 		max-width:100%;
 	}
 	
@@ -282,7 +287,7 @@ X:nth-last-child(n) (nth-last-child)
 		text-align:center;
 		text-shadow:2px 2px 0px <?=$black?>, -2px 2px 0px <?=$black?>, 2px -2px 0px <?=$black?>, -2px -2px 0px <?=$black?>;
 		vertical-align:middle;
-		width:70%;
+		width:80%;
 		z-index:0;
 	}
 	
@@ -375,11 +380,11 @@ X:nth-last-child(n) (nth-last-child)
 		display:inline;
 		left:50%;
 		margin-right:-50%;
-		max-height:78vh;
+		max-height:85vh;
 		max-width:95vw;
 		padding:50vh 50vw;
 		position:fixed;
-		top:55%;
+		top:50%;
 		transform:translate(-50%,-50%);
 		z-index:50;
 	}
@@ -459,6 +464,18 @@ X:nth-last-child(n) (nth-last-child)
 	.center {
 		margin:0 auto;
 	}
+	
+	.clearb {
+		clear:both;
+	}
+	
+	.clearl {
+		clear:left;
+	}
+	
+	.clearr {
+		clear:right;
+	}
 
 	.clearfix:after {
 			clear: both;
@@ -534,7 +551,7 @@ X:nth-last-child(n) (nth-last-child)
 	.sub-text {
 		font-size:.7em;
 	}
-
+	
 	.tc {
 		text-align:center
 	}
@@ -555,4 +572,4 @@ X:nth-last-child(n) (nth-last-child)
 		width:50%;
 	}
 	
-<?php include(__DIR__.'/geshi.php');?>
+<?php include(__DIR__.'/css.geshi.php');?>

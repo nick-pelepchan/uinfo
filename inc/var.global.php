@@ -1,6 +1,6 @@
 <?php
 
-include(__DIR__.'/colors.php');
+include(__DIR__.'/var.color.php');
 
 // MATH VARIABLES
 	$natn = "&#x2115;";
