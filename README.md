@@ -3,7 +3,7 @@ The entirety of this site is designed with HTML, PHP and CSS.
 
 ##To-do
 - ~~Major~~ Minor underlying function optimization
-- Segregate global page templates into files
+- Segregate global page templates into style files
 - Update academic pages (general template with sub content) to new format
 - Update information aggregation (data scraping and manipulation template) pages to new format
 - Update Jeep KL (technical documentation template) pages to new format
