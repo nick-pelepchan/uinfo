@@ -6,6 +6,7 @@ The entirety of this site is designed with HTML, PHP and CSS.
 - Update academic pages (general template with sub content) to new format
 - Update information aggregation (data scraping and manipulation template) pages to new format
 - Update Jeep KL (technical documentation template) pages to new format
+- Refine and re-activate IP statistics
 
 ##Page Design
 Because the pages are built automatically using the page_set() function and the $_SESSION['site_dir'] array, the design can easily be adapted to suit anyone's needs.  The [inc](https://github.com/unassailable/uinfo/tree/master/inc) folder contains the main [css.style.php](https://github.com/unassailable/uinfo/blob/master/inc/css.style.php) and other various css templates.
