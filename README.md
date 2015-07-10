@@ -1,6 +1,11 @@
 #Unassailable.info
 The entirety of this site is designed with HTML, PHP and CSS.
 
+The design of this site is primarily focused on usability and compatibility.  The framework is centered around automation, simplicity and adaptability.  The page layout is a direct reflection of the web directory's organization scheme, allowing the builder to easily manipulate content.  Page templates are utilized to automatically style and display the content to the user.
+
+![site design](https://raw.githubusercontent.com/unassailable/uinfo/master/media/design.png)
+
+
 ##To-do
 - ~~Major~~ Minor underlying function optimization
 - Segregate global page templates into style files
@@ -92,10 +97,6 @@ After $GLOBALS['curr'] has been exhausted, the function enters a [loop](https://
 The existing [tileset](https://github.com/unassailable/uinfo/blob/master/inc/function.php#L96)'s design provided an easy framework upon which a simple photo gallery could be implemented.  The tiles utilize the [background-image property](https://github.com/unassailable/uinfo/blob/master/inc/function.php#L142) to quickly load each image, specified by the dir.ini's 'back' declaration, as a tile's background.  The actual images are [loaded](https://github.com/unassailable/uinfo/blob/master/inc/function.php#L147) onto the page within [hidden divs](https://github.com/unassailable/uinfo/blob/master/inc/css.style.php#L372-L376).  Instead of linking to another page, each tile is designed to function as a button which toggles the visibility of the corresponding image using CSS [pseudo-classes](https://github.com/unassailable/uinfo/blob/master/inc/css.style.php#L378-L390).
 
 ##Page Design
-The design of this site is primarily focused on usability and compatibility.  The framework is centered around automation, simplicity and adaptability.  The page layout is a direct reflection of the web directory's organization scheme, allowing the builder to easily manipulate content.  Page templates are utilized to automatically style and display the content to the user.
-
-![site design](https://raw.githubusercontent.com/unassailable/uinfo/master/media/design.png)
-
 The current design is based on a [full screen (100% x 100vh)](https://github.com/unassailable/uinfo/blob/master/inc/css.layout.css), three-tile repeating pattern.  These tiles auto populate based on $GLOBALS['curr'], which is the array of links established by the current page (set by the [page_set() function](https://github.com/unassailable/uinfo/blob/master/inc/function.php#L63)).
 
 Every tile is grouped into a overarching "tileset" div class.  If the page's link array does not contain a full number of elements, divisible by nine, the remaining tiles are populated as blank tiles.
