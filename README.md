@@ -39,7 +39,7 @@ Note: Values from the ini files are parsed *verbatim*.  By default the HTML tags
 
 The value `href = 'another link" target="_blank'` is rendered as `<a href="another link" target="_blank"...`.  Effectively escaping the href attribute and assigning a target attribute while maintaining full site function.
 
-####$GLOBALS['site_dir']
+####$_SESSION['site_dir']
 ```
 [unique_id]=>
 	array(8) {
