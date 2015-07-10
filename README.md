@@ -3,13 +3,14 @@ The entirety of this site is designed with HTML, PHP and CSS.
 
 ##To-do
 - ~~Major~~ Minor underlying function optimization
+- Segregate global page templates into files
 - Update academic pages (general template with sub content) to new format
 - Update information aggregation (data scraping and manipulation template) pages to new format
 - Update Jeep KL (technical documentation template) pages to new format
 - Refine and re-activate IP statistics
 
 ##Page Design
-Because the pages are built automatically using the page_set() function and the $_SESSION['site_dir'] array, the design can easily be adapted to suit anyone's needs.  The [inc](https://github.com/unassailable/uinfo/tree/master/inc) folder contains the main [css.style.php](https://github.com/unassailable/uinfo/blob/master/inc/css.style.php) and other various css templates.
+The design of this site is primarily focused on usability and compatibility.  The framework is centered around automation, simplicity and adaptability.  The page layout is a direct reflection of the web directory's organization scheme, allowing the builder to easily manipulate content.  Page templates are utilized to automatically style and display the content to the user.
 
 ![site design](https://raw.githubusercontent.com/unassailable/uinfo/master/media/design.png)
 
