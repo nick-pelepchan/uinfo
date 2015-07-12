@@ -4,8 +4,14 @@
 	session_start();
 
 // Includes
-	include(__DIR__.'/inc/function.php');
+	include(__DIR__.'/inc/func.error.php');
+	include(__DIR__.'/inc/func.global.php');
+	include(__DIR__.'/inc/func.tile.php');
+	include(__DIR__.'/inc/func.array.php');
+	include(__DIR__.'/inc/func.hyperlink.php');
+	include(__DIR__.'/inc/func.sql.php');
 	include(__DIR__.'/inc/var.global.php');
+	include(__DIR__.'/inc/func.misc.php');
 	//include(__DIR__.'/admin/geshi/geshi.php');
 	//require_once(__DIR__.'/admin/tadd.php'); // IP logging
 	
