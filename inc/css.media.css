@@ -39,7 +39,7 @@
 		}*/
 		
 		#main {
-			margin:4em auto <?=$bot_h?> auto !important;
+			margin:4em auto 4em auto !important;
 		}
 		
 		.alert {

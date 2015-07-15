@@ -36,12 +36,23 @@
 	};
 
 	function lnk_proj($arr) {
-		echo "\n".tb('.').'<ul>';
+		echo "\n".tb('.').'<ul class="none">';
 		tb('+');
 		foreach ($arr as $k => $v) {
 			echo "\n".tb('.').'<li>';
 			tb('+');
-				echo "\n".tb('.').'<a href="'.$v['href'].'" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
+				echo "\n".tb('.').'<a href="?loc='.$GLOBALS['loc'];
+				// Keep any set debug options across links
+				if(isset($GLOBALS['debug'])){
+					echo '&amp;debug='.$GLOBALS['debug'];
+				};
+				if(isset($GLOBALS['opt'])){
+					echo '&amp;opt='.$GLOBALS['opt'];
+				};
+				if(isset($GLOBALS['ts'])){
+					echo '&amp;ts='.$GLOBALS['ts'];
+				};				
+				echo $v['href'].'" title="'.$v['title'].'"><span>'.$v['name'].'</span></a>';
 				tb('-');
 			echo "\n".tb('.').'</li>';
 			if(isset($v['sub'])){

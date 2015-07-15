@@ -214,8 +214,13 @@ X:nth-last-child(n) (nth-last-child)
 		border:none;
 		display:inline;
 		vertical-align:bottom;
-		max-height:1.8rem;
+		max-height:2.7rem;
 		padding:.1rem;
+	}
+	
+	#back span {
+		font-size:2.5rem;
+		line-height:2.7rem;
 	}
 	
 	#back:hover {
@@ -249,7 +254,18 @@ X:nth-last-child(n) (nth-last-child)
 		text-align:left;
 	}
 	
-	.tile {
+	.tiny-tile {
+		background-color:<?=$prim_lt?>;
+		color:<?=$black?>;
+		font-family:'Special Elite';
+		font-size:1.4rem;
+		font-variant:small-caps;
+		line-height:1.2rem;
+		overflow:hidden;
+		text-align:left;
+	}
+	
+	.tile, .tiny-tile {
 		background-position:0px 0px,center;
 		background-repeat:no-repeat,no-repeat;
 		-webkit-background-size:100% 100%,cover,;
@@ -267,7 +283,7 @@ X:nth-last-child(n) (nth-last-child)
 		background-size:100% 100%,cover,cover;
 	}
 	
-	.btile {
+	.btile, .tiny-btile {
 		background:url(/media/dots.png);
 	}
 
@@ -291,7 +307,27 @@ X:nth-last-child(n) (nth-last-child)
 		z-index:0;
 	}
 	
-	.tile a, .rtile a {
+	.tiny-tile .pop-title {
+		background-image:url(/media/pow-md.png);
+		background-position:center;
+		background-repeat:no-repeat;
+		background-size:90% 90%;
+		bottom:0;
+		color:<?=$yellow?>;
+		display:none;
+		font-weight:bold;
+		overflow:visible;
+		padding:5em 1em 3em 0;
+		position:absolute;
+		right:0;
+		text-align:center;
+		text-shadow:2px 2px 0px <?=$black?>, -2px 2px 0px <?=$black?>, 2px -2px 0px <?=$black?>, -2px -2px 0px <?=$black?>;
+		vertical-align:middle;
+		width:80%;
+		z-index:0;
+	}
+	
+	.tile a, .rtile a, .tiny-tile a {
 		color:<?=$black?>;
 		display:block;
 		height:100%;
@@ -299,7 +335,7 @@ X:nth-last-child(n) (nth-last-child)
 		z-index:1;
 	}
 	
-	.tile a span, .rtile a span {
+	.tile a span, .rtile a span, .tiny-tile a span {
 		background:<?=$white?>;
 		border-bottom:5px solid <?=$black?>;
 		border-right:5px solid <?=$black?>;
@@ -310,7 +346,12 @@ X:nth-last-child(n) (nth-last-child)
 		word-wrap:break-word;
 	}
 	
-	.tile a span:first-letter, .rtile a span:first-letter, .return a span:first-letter {
+	.tiny-tile a span {
+		border-bottom:3px solid <?=$black?>;
+		border-right:3px solid <?=$black?>;
+	}
+	
+	.tile a span:first-letter, .rtile a span:first-letter, .tiny-tile a span:first-letter, .return a span:first-letter {
 		color:<?=$prim?>;
 		font-size:1.3em;
 		font-style:italic;
@@ -318,11 +359,11 @@ X:nth-last-child(n) (nth-last-child)
 		text-shadow:2px 2px 0px <?=$black?>, -2px 2px 0px <?=$black?>, 2px -2px 0px <?=$black?>, -2px -2px 0px <?=$black?>;
 }
 	
-	.tile:hover a span, .rtile:hover a span {
+	.tile:hover a span, .rtile:hover a span, .tiny-tile:hover a span {
 		background-color:<?=$comp_lt?>;
 	}
 	
-	.tile:hover .pop-title, .rtile:hover .pop-title {
+	.tile:hover .pop-title, .rtile:hover .pop-title, .tiny-tile:hover .pop-title {
 		display:inline !important;
 	}
 	
@@ -337,21 +378,28 @@ X:nth-last-child(n) (nth-last-child)
 		line-height:1.3rem;
 		word-wrap: break-word;
 	}
+	
+	#main img {
+		box-shadow: 3px 3px 10px -3px <?=$black6?>;
+	}
 
 /* SIDE MENU */
 		.sidem {
+			font-family:'Special Elite';
 			height:100%;
-			padding:0 1vw 0 0;
-			width:calc(25% - 2vw);
+			margin:0 .5vw 0 0;
+			padding:0 .5vw 0 0;
+			width:calc(25% - 1vw);
 		}
 		
 		.sidem li:hover a span {
-			color:<?=$comp?>;
+			color:<?=$comp_dk?>;
 		}
 		
 		.sidem a span {
-			color:<?=$prim_dk?>;
-			font-size:.9em;
+			color:<?=$gray?>;
+			font-size:1em;
+			line-height:1.2em;
 			text-align:left;
 			word-wrap:none;
 		}
@@ -374,9 +422,27 @@ X:nth-last-child(n) (nth-last-child)
 		position:relative;
 		z-index:3;
 	}
+	
+	.izoom {
+		display:inline-block;
+		margin:.5vh auto;
+	}
+	
+	.izoom img {
+		max-height:50vh;
+		max-width:40vw;
+	}
+	
+	.four-gal {
+		display:block;
+		float:left;
+		margin:2.5%;
+		max-height:20%;
+		max-width:20%;
+	}
 
-	.zoom:focus img { /*http://www.w3.org/Style/Examples/007/center.en.html*/
-		background:<?=$black5?>;
+	.zoom:focus img, .izoom:focus img { /*http://www.w3.org/Style/Examples/007/center.en.html*/
+		background:<?=$black9?>;
 		display:inline;
 		left:50%;
 		margin-right:-50%;
@@ -394,10 +460,11 @@ X:nth-last-child(n) (nth-last-child)
 /* COMP-BOX */
 	.comp-box {
 		background:<?=$sec2?>;
-		border-radius:4px;
-/*		box-shadow: inset 3px 3px 10px -3px <?=$black2?>;*/
-		color:<?=$gray?>;
-		padding:1vh 1vw;
+/* 		border-radius:4px;
+ */		box-shadow: inset -3px 3px 10px -3px <?=$black2?>;
+/* 		border:3px solid <?=$gray?>;
+ */		color:<?=$gray?>;
+		padding:.5vh 1%;
 	}
 
 	.comp-box ::-moz-selection {
@@ -569,7 +636,19 @@ X:nth-last-child(n) (nth-last-child)
 	}
 	
 	.w50 {
-		width:50%;
+		max-width:50%;
+	}
+	
+	.soft-box {
+		float:left;
+		margin:.5vh 1%;
+		width:calc(46% - 6px);
+	}
+	
+	.hard-box {
+		float:right;
+		margin:.5vh 1%;
+		width:calc(46% - 6px);
 	}
 	
 <?php include(__DIR__.'/css.geshi.php');?>

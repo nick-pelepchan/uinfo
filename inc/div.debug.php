@@ -79,7 +79,7 @@ tb('+');
 
 	
 	if(isset($GLOBALS['opt']) && strpos($GLOBALS['opt'],'dump')!==false){
-		//var_dump(get_defined_vars());
+		var_dump(get_defined_vars());
 		//var_dump($GLOBALS['webr']);
 		//var_dump($GLOBALS);
 	};

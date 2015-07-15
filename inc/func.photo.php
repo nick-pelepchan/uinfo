@@ -16,7 +16,7 @@ function build_dir_ini(){
 		$name = basename($filename);
 /* 		$href = '?loc='.$GLOBALS['curr']['sub'].'&amp;zoom='.$name;*/
 		$href = 'button" tabindex="1" class="zoom';
-		$back = htmlspecialchars(str_replace($GLOBALS['webr'],'',$filename));
+		$back = '';
 		$pattern = "/^\[$name\]\n.*\n.*\n/m"; // search for name + 6 lines
 		if(isset($GLOBALS['bpforce']) && preg_match_all($pattern,file_get_contents($dir.$file.'.bak'),$matches)){
 			// copy existing contents to new file

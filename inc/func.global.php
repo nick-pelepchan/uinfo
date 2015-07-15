@@ -11,7 +11,7 @@
 
 		// _GET any set variables into $GLOBALS
 		foreach($_GET as $k => $v){
-			$GLOBALS[$k] = strtolower(urldecode($v?$v:''));
+			$GLOBALS[$k] = strtolower(urldecode("$v"));
 		};
 		
 		// Establish $_SESSION['site_dir'] and $GLOBALS['curr']
@@ -20,7 +20,7 @@
 				'name'=>'Main Menu',
 				'title'=>'Return to main menu',
 				'href'=>'?loc=main',
-				'back'=>'/media/main.png',
+				'back'=>'main.png',
 				'sub'=>'main',
 				'incpth'=>dirname(__DIR__).'/',
 				'imgpth'=>'/media/'
@@ -38,9 +38,9 @@
 		$arr=parse_ini_file($pth.'/dir.ini', true); // parse directory ini
 		// Iterate through array and grab sub menus
  		foreach($arr as $k => $v){
+			$arr[$k]['incpth'] = $pth.'/'.$k.'/';
+			$arr[$k]['imgpth'] = str_replace($GLOBALS['webr'],'',$pth).'/'.$k;
 			if(array_key_exists('sub',$arr[$k])){
-				$arr[$k]['incpth'] = $pth.'/'.$arr[$k]['sub'].'/';
-				$arr[$k]['imgpth'] = str_replace($GLOBALS['webr'],'',$pth).'/'.$arr[$k]['sub'].'/';
 				$arr[$k]['child'] = ini_grab($pth.'/'.$arr[$k]['sub']);
 			};
 		};

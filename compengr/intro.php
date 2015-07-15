@@ -1,35 +1,40 @@
+<?php
+include($GLOBALS['webr'].'/inc/func.compengr.php');
+?>
 <div class="fleft sidem" >
-<h4 class="solid">Projects</h4>
+<h1 class="solid">Projects</h1>
 <?php
 lnk_proj($GLOBALS['curr']['child']);
 ?>
 </div>
 
-<div class="fright sidec">
+<div class="fright sidec tc">
 
 <?php
 if(isset($_GET['sub'])){
 	$arr = explode(',', $_GET['sub']);
-	include($arr[0].'/'.$arr[1].'.php');
+	include(__DIR__.'/'.$GLOBALS['curr']['sub'].'/'.$arr[0].'/'.$arr[1].'/page.php');
 } else {
 ?>
 
-<img class="desktop-only center" alt="" src="/compengr/intro.jpg">
-
 <h1 class="solid">Introduction to Engineering</h1>
+
+<img class="desktop-only center" alt="" src="/compengr/intro/intro.jpg">
 
 <p>Every journey has its first step.  This initial course introduced us to technological concepts and engineering drawing.  We learned about basic systems, received an overview of our major, and became acquainted with the skill sets we require to be successful in our chosen field.</p>
 
 <div class="clearfix">
-	<span class="fleft w50">
+	<span class="soft-box comp-box">
 		<h2>Software Utilized</h2>
 		<ul class="none">
 		<li>NI Labview</li>
 		<li>Solidworks</li>
+		<li>&nbsp;</li>
+		<li>&nbsp;</li>
 		</ul>
 	</span>
 
-	<span class="fright w50">
+	<span class="hard-box comp-box">
 		<h2>Hardware Utilized</h2>
 		<ul class="none">
 		<li>E3631A Agilent Power Supply</li>
@@ -54,6 +59,8 @@ if(isset($_GET['sub'])){
 </span>
 
 <?php
+//tiny_tileset('labview,solidworks');
+
 };
 ?>
 
