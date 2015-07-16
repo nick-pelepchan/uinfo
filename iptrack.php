@@ -1,12 +1,12 @@
 <?php
 
 // colors
-$mfill = $GLOBALS['pallet']['prim']['prim'];
-$mstroke = $GLOBALS['pallet']['prim_dk']['prim_dk'];
-$afill = $GLOBALS['pallet']['sec2']['sec2'];
-$astroke = $GLOBALS['pallet']['sec2_dk']['sec2_dk'];
-$ofill = $GLOBALS['pallet']['sec1_dk']['sec1_dk'];
-$ostroke = $GLOBALS['pallet']['sec1_dkr']['sec1_dkr'];
+$mfill = _PRIM_;
+$mstroke = _PRIM_DK_;
+$afill = _SEC2_;
+$astroke = _SEC2_DK_;
+$ofill = _SEC1_DK_;
+$ostroke = _SEC1_DKR_;
 
 $sql = 'SELECT * FROM track	WHERE id > 0';
 $result = sql_conn($sql);
@@ -45,15 +45,15 @@ echo "\n".'<table class="track_tbl center">
   </tr>
   <tr>
     <td class="tl">IP Address:</td>
-    <td class="tr">'.$ip.'</td>
+    <td class="tr">'._USRIP_.'</td>
   </tr>
   <tr>
     <td class="tl">Agent (browser):</td>
-    <td class="tr">'.$agent.'</td>
+    <td class="tr">'._USRAGNT_.'</td>
   </tr>
   <tr>
     <td class="tl">Referrer:</td>
-    <td class="tr">'.$ref.'</td>
+    <td class="tr">'._USRREF_.'</td>
   </tr>
 </table>';
 

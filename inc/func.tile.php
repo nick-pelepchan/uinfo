@@ -1,9 +1,11 @@
 <?php
-
 /////////////////////////////////////////////////////////////////
 // Tile Layout
 //
 	function tileset(){
+		echo "\n".tb('.').'<style>';
+		echo "\n".tb('.').'</style>';
+	
 		$i=1; // tile class count
 		$j=0; // overall tile count
 		// Tileset div

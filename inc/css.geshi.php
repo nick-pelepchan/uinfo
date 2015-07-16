@@ -1,14 +1,14 @@
 <?php
   // brackets
-  $g_c_br0 = $yellow;
+  $g_c_br0 = _YELLOW_;
   
   // comments
-  $g_c_co1 = $sec1_dkr;
+  $g_c_co1 = _SEC1_DKR_;
   $g_c_co2 = $g_c_co1;
   $g_c_coMULTI = $g_c_co1;
   
   // escaped_chars
-  $g_c_es0 = $white6;
+  $g_c_es0 = _WHITE6_;
   $g_c_es1 = $g_c_es0;
   $g_c_es2 = $g_c_es0;
   $g_c_es3 = $g_c_es0;
@@ -17,25 +17,25 @@
   $g_c_esHard = $g_c_es0;
   
   // important
-  $g_c_imp = $yellow;
+  $g_c_imp = _YELLOW_;
   
   // keywords
-  $g_c_kw1 = $blue;
+  $g_c_kw1 = _BLUE_;
   $g_c_kw2 = $g_c_kw1;
   $g_c_kw3 = $g_c_kw1;
   $g_c_kw4 = $g_c_kw1;
   
   // lines
-  $g_c_li1 = $black8;
-  $g_c_li2 = $black9;
-  $g_c_lit = $platinum;
+  $g_c_li1 = _BLACK8_;
+  $g_c_li2 = _BLACK9_;
+  $g_c_lit = _PLATINUM_;
   
   // methods
-  $g_c_me1 = $white;
+  $g_c_me1 = _WHITE_;
   $g_c_me2 = $g_c_me1;
   
   // numbers
-  $g_c_nu0 = $orange;
+  $g_c_nu0 = _ORANGE_;
   $g_c_nu6 = $g_c_nu0;
   $g_c_nu8 = $g_c_nu0;
   $g_c_nu12 = $g_c_nu0;
@@ -45,10 +45,10 @@
   $g_c_nu19 = $g_c_nu0;
   
   // strings
-  $g_c_st0 = $white;
+  $g_c_st0 = _WHITE_;
   
   // symbols
-  $g_c_sy0 = $yellow;
+  $g_c_sy0 = _YELLOW_;
   ?>
   
     /* GESHI */

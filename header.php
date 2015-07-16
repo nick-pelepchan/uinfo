@@ -4,7 +4,6 @@ echo "\n".tb('.').'<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang
 tb('+');
 	echo "\n".tb('.').'<head>';
 	tb('+');
-		echo "\n".tb('.').'<link rel="stylesheet" type="text/css" href="/inc/css.style.php" media="screen"/>';
 		echo "\n".tb('.').'<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>';
 		echo "\n".tb('.').'<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>';
 		echo "\n".tb('.').'<title>Unassailable Info</title>';

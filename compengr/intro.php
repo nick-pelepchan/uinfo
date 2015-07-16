@@ -1,6 +1,11 @@
 <?php
 include($GLOBALS['webr'].'/inc/func.compengr.php');
+echo "\n".tb('.').'<style>';
+	include($GLOBALS['webr'].'/inc/css.sidemc.php');
+	include($GLOBALS['webr'].'/inc/css.compbox.php');
+echo "\n".tb('.').'</style>';
 ?>
+
 <div class="fleft sidem" >
 <h1 class="solid">Projects</h1>
 <?php

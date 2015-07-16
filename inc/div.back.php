@@ -1,5 +1,9 @@
 <?php
 
+echo "\n".tb('.').'<style>';
+	include($GLOBALS['webr'].'/inc/css.divback.php');
+echo "\n".tb('.').'</style>';
+
 echo "\n".tb('.').'<div id="back" class="return">';
 tb('+');	
 	echo "\n".tb('.').'<a href="'.$GLOBALS['parent']['href'];
