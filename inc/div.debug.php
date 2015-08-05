@@ -33,27 +33,27 @@ tb('+');
 	};
 
 	if(isset($GLOBALS['opt']) && strpos($GLOBALS['opt'],'lorem')!==false){
-		echo $hr;
-		echo $lorem;
+		echo '<hr/>';
+		echo _LOREM_;
 		echo "\n".tb('.').'<a href="#">A LINK</a>';
 		if(strpos($GLOBALS['opt'],'color')!==false){
-			echo $hr;
+			echo '<hr/>';
 			echo "\n".tb('.').'<div style="display:inline-block;vertical-align:top;">';
 			tb('+');
-				color_pallet('pallet');
+				color_pallet('base');
 				tb('-');
 				echo "\n".tb('.').'</div>';
 		};
 		echo "\n".tb('.').'<div class="comp-box">';
 		tb('+');
-			echo $hr;
-			echo $lorem;
+			echo '<hr/>';
+			echo _LOREM_;
 			echo "\n".tb('.').'<a href="#">A LINK</a>';
 			if(strpos($GLOBALS['opt'],'color')!==false){
-				echo $hr;
+				echo '<hr/>';
 				echo "\n".tb('.').'<div style="display:inline-block;vertical-align:top;">';
 				tb('+');
-					color_pallet('pallet');
+					color_pallet('base');
 					tb('-');
 				echo "\n".tb('.').'</div>';
 				tb('-');

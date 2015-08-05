@@ -1,13 +1,13 @@
 <?php
 
 // MATH VARIABLES
-	define('NATN_','&#x2115;');
-	define('INTN_','&#x2124;');
-	define('RATN_','&#x211A;');
-	define('RELN_','&#x211D;');
+	define('_NATN_','&#x2115;');
+	define('_INTN_','&#x2124;');
+	define('_RATN_','&#x211A;');
+	define('_RELN_','&#x211D;');
 
-  define('PGBRK_','<hr style="color:BLACK5;background:WHITE2;height:.3em;">');
-  define('LOREM_','<h1>LOREM lorem Lorem...</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.</p>
+  define('_PGBRK_','<hr style="color:BLACK5;background:WHITE2;height:.3em;">');
+  define('_LOREM_','<h1>LOREM lorem Lorem...</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.</p>
   <h2>Donec</h2>
   <p>ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros.</p>
   <h3>Donec viverra mi quis</h3>

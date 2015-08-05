@@ -8,14 +8,10 @@
 	include(__DIR__.'/inc/var.color.php');
 	include(__DIR__.'/inc/func.error.php');
 	include(__DIR__.'/inc/func.global.php');
-	include(__DIR__.'/inc/func.tile.php');
 	include(__DIR__.'/inc/func.array.php');
 	include(__DIR__.'/inc/func.hyperlink.php');
-	include(__DIR__.'/inc/func.sql.php');
 	include(__DIR__.'/inc/func.misc.php');
-	//include(__DIR__.'/admin/geshi/geshi.php');
-	//require_once(__DIR__.'/admin/tadd.php'); // IP logging
-	
+
 // Custom error handling
 //	set_error_handler("customError",E_ALL);
 
@@ -34,15 +30,14 @@
 	echo "\n".tb('.').'<div id="cont">';
 	tb('+');
 		
-// Main div
-		echo "\n".tb('.').'<div id="main">'."\n";
+// Offline div
+		echo "\n".tb('.').'<div id="down" style="background-image:url(/media/logo_whiteout.png);">';
 		tb('+');
-			page_set();
+			echo "\n".tb('.').'<span class="v-center">Apologies, this site is being updated and is currently unavailable.</span>';
+			echo "\n".tb('.').'<a href="http://www.linkedin.com/in/pelepchann" target="_blank"><img class="" src="/media/In-2C-34px-TM.png"/></a>';
+			echo "\n".tb('.').'<a href="https://github.com/unassailable/uinfo" target="_blank"><img class="" src="/media/GitHub-Mark-32px.png"/></a>';
 			tb('-');
-		echo "\n".tb('.').'</div>'."\n";
-
-// Top bar
-		include(__DIR__.'/topbar.php');
+		echo "\n".tb('.').'</div>';
 
 // Debug div
 		if(isset($GLOBALS['debug'])){
@@ -50,16 +45,16 @@
 		};	
 		
 // Close container div
-	echo "\n".tb('.').'</div>'."\n";
-	tb('-');	
+		echo "\n".tb('.').'</div>'."\n";
+		tb('-');	
 
-	echo "\n".tb('.').'</body>';
-	tb('-');
-echo "\n".tb('.').'</html>';
+		echo "\n".tb('.').'</body>';
+		tb('-');
+	echo "\n".tb('.').'</html>';
 	
 // Flush
 	ob_end_flush();
-//	if(isset($GLOBALS['send']) && $GLOBALS['send']==9){
+	if(isset($GLOBALS['send']) && $GLOBALS['send']==9){
 		session_destroy();
-//	};	
+	};	
 ?>

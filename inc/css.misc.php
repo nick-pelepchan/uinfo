@@ -121,6 +121,14 @@
 		text-align:right;
 	}
 	
+	.v-center {
+		position:absolute;
+		left:0;
+		top:40%;
+		vertical-align:middle;
+		width:100%;
+	}
+	
 	.w50 {
 		max-width:50%;
 	}

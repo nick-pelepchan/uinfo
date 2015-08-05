@@ -30,18 +30,13 @@ function alert($str){
 
 // prints all the colors on the page
 function color_pallet($pallet) {
-	foreach($GLOBALS[$pallet] as $k => $v){
-		$i=0;
-		echo '<div>';
-		foreach($v as $l => $w){
-			++$i;
-			echo '<a role="button" title="'.$l.' ('.$w.')" style="background:'.$w.';display:inline-block;margin:1px;height:20px;width:20px;"></a>';
-			if($i %10 == 0){
-				echo '<br/>';
+	echo '<div>';
+		foreach($GLOBALS[$pallet] as $k => $v){
+			foreach($v as $l => $w){
+				echo '<a role="button" title="'.$l.' ('.$w.')" style="background:rgb('.$w.');display:inline-block;margin:1px;height:20px;width:20px;"></a>';
 			};
 		};
-		echo '</div>';
-	};
+	echo '</div>';
 	
 	return;
 };

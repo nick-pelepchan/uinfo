@@ -7,13 +7,13 @@
 
 /* BODY */
 	body {
-		background:url(/media/dots.png) <?=_BLACK_?>;
+		background:<?=_GUNMETAL_?>;
 	}
 
 /* CONTAINER */
 	#cont {
 		background:<?=_BACK_?>;
-		color:<?=_GRAY_?>;
+		color:<?=_GUNMETAL_?>;
 		overflow:hidden;
 	}
 
@@ -100,7 +100,7 @@
 	hr:after {
 		background:<?=_BACK_?>;
 		border-radius:5px;
-		content:"†";
+		content:"#";
 		display:inline-block;
 		font-weight:bold;
 		padding:0 .25em;

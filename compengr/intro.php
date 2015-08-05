@@ -3,6 +3,7 @@ include($GLOBALS['webr'].'/inc/func.compengr.php');
 echo "\n".tb('.').'<style>';
 	include($GLOBALS['webr'].'/inc/css.sidemc.php');
 	include($GLOBALS['webr'].'/inc/css.compbox.php');
+	include($GLOBALS['webr'].'/inc/css.imggal.php');
 echo "\n".tb('.').'</style>';
 ?>
 

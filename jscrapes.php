@@ -8,7 +8,7 @@ tb('+');
 	$sites=array();
 
 	// Include scraper templates
-	include(__DIR__.'/inc/jscr.draper.php');
+//	include(__DIR__.'/inc/jscr.draper.php');
 	array_merge($sites,$arr);
 
 	foreach($arr as $site => $args){

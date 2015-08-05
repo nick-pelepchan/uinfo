@@ -239,7 +239,7 @@ $base = array(
 	)
 );
 
-define('CLEAR_','rgba(0,0,0,0)');
+define('_CLEAR_','rgba(0,0,0,0)');
 
 foreach($base as $arr){
 	foreach($arr as $k => $v){
@@ -253,10 +253,5 @@ foreach($base as $arr){
 		};
 	};
 };
-
-
-
-
-
 
 ?>

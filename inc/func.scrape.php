@@ -42,16 +42,20 @@ function jscr_match($data,$regex,$linkex,$titlex,$namex,$datex,$locex){
 	foreach($data as $v){
 		preg_match($titlex,$v[0],$title); // Get title
 		echo "\n".tb('.').'<span class="title"><h4><a target="_blank" href="'.$v[2].'">'.$title[1].'</a></h4></span>';
+
+/* 		echo "\n\n".'<br/><hr/>!!! START OF INPUT !!!';
+		print_r($v[0]);
+		echo '!!! END OF INPUT !!!<hr/><br/>'."\n\n"; */
 		
 		if(preg_match_all($regex,$v[0],$list)){ // Get listing
-			print_r($list);
-			foreach($list[0] as $k => $v){
+/* 			print_r($list);
+ */			foreach($list[0] as $k => $v){
 				preg_match($namex,$v,$name);
 				preg_match($datex,$v,$dte);
 				preg_match($locex,$v,$loca);
 				if(preg_match($linkex,$v,$href)){
 					if(FALSE === filter_var($href[1], FILTER_VALIDATE_URL)){
-						print '<span class="result"><a target="_blank" href="'.ltrim($href[1],'/').'">'.$name.' - '.$dte.' - '.$loca.'</a></span><br/>';
+						print '<span class="result"><a target="_blank" href="'.ltrim($href[1],'/').'">'.$name[1].' - '.$dte[1].' - '.$loca[1].'</a></span><br/>';
 					};
 				};
 			};
